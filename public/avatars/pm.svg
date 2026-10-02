@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 428" width="400" height="428" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Fair skin -->
+    <linearGradient id="pm-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#F3D2B5"/>
+      <stop offset="100%" stopColor="#E8C4A8"/>
+    </linearGradient>
+    <!-- Shadow gradient -->
+    <linearGradient id="pm-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#5B2A86"/>
+      <stop offset="100%" stopColor="#4A1C6E"/>
+    </linearGradient>
+    <!-- Highlight gradient -->
+    <linearGradient id="pm-highlight" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#F0E8FF"/>
+      <stop offset="100%" stopColor="#D8D0F0"/>
+    </linearGradient>
+    <!-- Amber turtleneck -->
+    <linearGradient id="turtleneck-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#F59E0B"/>
+      <stop offset="100%" stopColor="#D97705"/>
+    </linearGradient>
+    <!-- Rounded glasses -->
+    <linearGradient id="pm-glasses-lens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#FFF"/>
+      <stop offset="100%" stopColor="#F5F0F5"/>
+    </linearGradient>
+    <!-- Olive drab backdrop -->
+    <linearGradient id="olive-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#3E3A1E"/>
+      <stop offset="100%" stopColor="#2A2512"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- BG - Olive drab backdrop -->
+  <g class="bg">
+    <rect x="0" y="0" width="400" height="428" fill="url(#olive-bg)"/>
+  </g>
+  
+  <!-- Body - Amber turtleneck -->
+  <g class="body" fill="url(#turtleneck-base)">
+    <path d="M150 200 Q100 280 150 360 Q200 440 250 360 Q300 280 250 200 Q200 120 150 120 Z"/>
+    <!-- Turtleneck fold -->
+    <path d="M150 130 Q140 120 155 120 Q160 130 155 135 Q150 140 150 145 Z" fill="url(#turtleneck-base)"/>
+  </g>
+  
+  <!-- Neck -->
+  <g class="neck">
+    <rect x="195" y="360" width="10" height="12" fill="#F59E0B" rx="1"/>
+  </g>
+  
+  <!-- Head -->
+  <g class="head">
+    <ellipse cx="200" cy="214" rx="165" ry="175" fill="url(#pm-base)"/>
+    <!-- Rounded glasses -->
+    <g class="glasses">
+      <ellipse cx="200" cy="200" rx="50" ry="40" fill="url(#pm-glasses-lens)"/>
+      <!-- Frame -->
+      <circle cx="195" cy="200" r="8" fill="#6D28D9" opacity="0.5"/>
+      <circle cx="205" cy="200" r="8" fill="#6D28D9" opacity="0.5"/>
+      <!-- Glass highlight -->
+      <circle cx="193" cy="193" r="6" fill="white" opacity="0.3"/>
+      <circle cx="207" cy="193" r="6" fill="white" opacity="0.3"/>
+    </g>
+  </g>
+  
+  <!-- Ear_L -->
+  <g class="ear_L">
+    <ellipse cx="130" cy="220" rx="20" ry="25" fill="url(#pm-base)"/>
+  </g>
+  
+  <!-- Ear_R -->
+  <g class="ear_R">
+    <ellipse cx="270" cy="220" rx="20" ry="25" fill="url(#pm-base)"/>
+  </g>
+  
+  <!-- hair_back -->
+  <g class="hair_back" fill="url(#pm-base)">
+    <!-- Long violet hair - back -->
+    <path d="M80 150 Q60 140 70 130 Q50 120 60 110 Q70 100 50 90 Z"/>
+    <path d="M100 160 Q80 150 90 140 Q65 130 75 120 Q80 110 60 100 Z"/>
+  </g>
+  
+  <!-- hair_front -->
+  <g class="hair_front" fill="url(#pm-base)">
+    <!-- Long violet hair - front, past shoulders -->
+    <path d="M200 100 Q190 80 210 70 Q200 60 220 70 Q190 80 180 90 Q170 100 170 110 Q180 120 170 130 Q175 140 170 150 Q165 155 160 160 Q170 165 160 170 Q165 175 155 170 Q160 170 150 165 Q155 160 145 155 Q150 150 140 150 Q145 145 135 140 Q140 135 130 130 Q135 120 125 110 Q120 100 110 90 Q115 80 105 70 Q100 60 90 60 Q95 70 85 65 Q80 60 75 55 Q70 50 65 45 Z"/>
+    <!-- Hair strands -->
+    <path d="M210 130 Q220 120 230 130 Q225 135 235 140 Q230 145 225 150 Q220 155 210 155 Q200 150 190 145 Q180 140 170 135 Q160 130 150 125 Q140 120 130 115 Q120 110 110 105 Q110 100 100 95 Q105 90 95 85 Q100 80 90 70 Z"/>
+  </g>
+  
+  <!-- brow_L -->
+  <g class="brow_L" fill="#5B2A86">
+    <!-- Relaxed brow -->
+    <path d="M130 155 Q120 150 140 145 Q125 155 135 150 Z"/>
+    <path d="M135 150 Q130 145 145 145 Q135 150 140 152 Z"/>
+  </g>
+  
+  <!-- brow_R -->
+  <g class="brow_R" fill="#5B2A86">
+    <!-- Relaxed brow -->
+    <path d="M270 155 Q280 150 270 145 Q265 155 275 150 Z"/>
+    <path d="M265 150 Q260 145 270 145 Q265 150 270 152 Z"/>
+  </g>
+  
+  <!-- eye_L -->
+  <g class="eye_L" transform-box="fill-box">
+    <!-- Sclera -->
+    <circle cx="150" cy="200" r="35" fill="#FFF" stroke="none"/>
+    <!-- Iris -->
+    <circle cx="150" cy="200" r="18" fill="#F3D2B5"/>
+    <!-- Pupil -->
+    <circle cx="150" cy="200" r="6" fill="#5B2A86"/>
+    <!-- Highlight -->
+    <circle cx="147" cy="195" r="4" fill="#FFF" opacity="0.5"/>
+    <!-- Glass highlight -->
+    <ellipse cx="155" cy="195" rx="5" ry="4" fill="white" opacity="0.2"/>
+  </g>
+  
+  <!-- eye_R -->
+  <g class="eye_R" transform-box="fill-box">
+    <!-- Sclera -->
+    <circle cx="250" cy="200" r="35" fill="#FFF" stroke="none"/>
+    <!-- Iris -->
+    <circle cx="250" cy="200" r="18" fill="#F3D2B5"/>
+    <!-- Pupil -->
+    <circle cx="250" cy="200" r="6" fill="#5B2A86"/>
+    <!-- Highlight -->
+    <circle cx="253" cy="195" r="4" fill="#FFF" opacity="0.5"/>
+    <!-- Glass highlight -->
+    <ellipse cx="245" cy="195" rx="5" ry="4" fill="white" opacity="0.2"/>
+  </g>
+  
+  <!-- nose -->
+  <g class="nose">
+    <ellipse cx="200" cy="240" rx="12" ry="10" fill="#E8C4A8"/>
+  </g>
+  
+  <!-- cheek_L -->
+  <g class="cheek_L">
+    <circle cx="155" cy="245" r="8" fill="#F3D2B5" opacity="0.3"/>
+  </g>
+  
+  <!-- cheek_R -->
+  <g class="cheek_R">
+    <circle cx="245" cy="245" r="8" fill="#F3D2B5" opacity="0.3"/>
+  </g>
+  
+  <!-- mouth_closed -->
+  <g class="mouth_closed">
+    <path d="M180 260 Q200 270 220 260" fill="none" stroke="#5B2A86" stroke-width="1"/>
+    <!-- Relaxed dreamy grin -->
+    <path d="M185 265 Q200 275 215 265 Q205 270 195 260 Z" fill="none" stroke="#5B2A86" stroke-width="1" stroke-linecap="round"/>
+  </g>
+  
+  <!-- mouth_open (hidden by default) -->
+  <g class="mouth_open" opacity="0">
+    <path d="M160 250 Q180 230 200 250 Q190 260 200 270 Q170 280 160 270 Z" fill="#FFF" opacity="0.9"/>
+  </g>
+  
+  <!-- glasses detail -->
+  <g class="glasses" opacity="1">
+    <ellipse cx="200" cy="200" rx="50" ry="40" fill="url(#pm-glasses-lens)"/>
+    <circle cx="195" cy="200" r="8" fill="#6D28D9" opacity="0.5"/>
+    <circle cx="205" cy="200" r="8" fill="#6D28D9" opacity="0.5"/>
+    <circle cx="193" cy="193" r="6" fill="white" opacity="0.3"/>
+    <circle cx="207" cy="193" r="6" fill="white" opacity="0.3"/>
+  </g>
+  
+  <!-- accessory - nothing special -->
+  
+  <!-- frame_rim -->
+  <g class="frame_rim" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none">
+    <path d="M10 10 Q10 0 50 0 Q90 0 90 10 Q90 50 50 50 Q10 50 10 10 Z"/>
+  </g>
+</svg>

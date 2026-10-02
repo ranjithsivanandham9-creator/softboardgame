@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 428" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="428" fill="#E2AE86"/>
+  <g transform="translate(0 20)">
+    <circle cx="200" cy="0" r="180" fill="#0EA5E9"/>
+    <ellipse cx="200" cy="214" rx="160" ry="170" fill="#E2AE86"/>
+    <g fill="#C4C8CE">
+      <circle cx="150" cy="200" r="35"/>
+      <circle cx="250" cy="200" r="35"/>
+    </g>
+    <g fill="#EF4444">
+      <path d="M180 260 Q200 270 220 260"/>
+    </g>
+  </g>
+</svg>

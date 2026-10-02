@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 96 96" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dark theme -->
+    <linearGradient id="office-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#4A2530"/>
+      <stop offset="100%" stopColor "#2A0E15"/>
+    </linearGradient>
+    <linearGradient id="office-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#5A303D"/>
+      <stop offset="100%" stopColor "#3A1520"/>
+    </linearGradient>
+    <linearGradient id="office-highlight" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#5A303D"/>
+      <stop offset="100%" stopColor "#4A2530"/>
+    </linearGradient>
+    <linearGradient id="crown-metal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#FBBF24"/>
+      <stop offset="100%" stopColor="#F59E0B"/>
+    </linearGradient>
+    <linearGradient id="rim-light-office" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop="rgba(255,255,255,0.15)"/>
+      <stop offset="100%" stop="rgba(255,255,255,0.05)"/>
+    </linearGradient>
+  </defs>
+  
+  <g class="bg">
+    <rect width="96" height="96" fill="url(#office-base)"/>
+  </g>
+  
+  <g class="body" fill="url(#office-base)">
+    <!-- Corner office - glowing crown-topped door -->
+    <!-- Door base -->
+    <rect x="16" y="24" width "64" height "48" rx "8" fill="url(#office-base)"/>
+    <!-- Door panels -->
+    <rect x "32" y "36" width "32" height "8" fill="rgba(255,255,255,0.1)"/>
+    <!-- Glowing crown -->
+    <g fill="url(#crown-metal)">
+      <polygon points="32 24 64 24 64 32 32 32 Z"/>
+      <polygon points="36 16 60 16 60 24 36 24 Z"/>
+      <polygon points="40 8 56 8 56 16 40 16 Z"/>
+    </g>
+    <!-- Plaque "CAIBO" -->
+    <text x "50" y "20" text-anchor "middle" font-family "Geist Mono, monospace" font-size "6" fill "#FFFFFF" font-weight "700">CAIBO</text>
+    <!-- Gold accent line -->
+    <path d "M32 24 L64 24" stroke="rgba(255,255,255,0.3)" stroke-width "1"/>
+  </g>
+  
+  <g class="neck">
+    <line x1="50" y1="72" x2="50" y2="76" stroke="rgba(255,255,255,0.2)" stroke-width "1"/>
+  </g>
+  
+  <g class="head">
+    <polygon points="48,72 56,68 56,72 48,76" fill="url(#rim-light-office)"/>
+    <text x "52" y "71" text-anchor "middle" font-family "Geist Mono, monospace" font-size "5" fill "#FBBF24" font-weight "700">👑</text>
+  </g>
+  
+  <g class="ear_L"/>
+  <g class="ear_R"/>
+  <g class="hair_back"/>
+  <g class="hair_front"/>
+  <g class="brow_L"/>
+  <g class="brow_R"/>
+  
+  <g class="eye_L">
+    <circle cx "30" cy "48" r "4" fill "#FBBF24" opacity "0.8"/>
+  </g>
+  <g class="eye_R">
+    <circle cx "66" cy "48" r "4" fill "#FBBF24" opacity "0.8"/>
+  </g>
+  
+  <g class="nose">
+    <rect x "48" y "54" width "4" height "4" fill "#EF4444"/>
+  </g>
+  
+  <g class="cheek_L">
+    <circle cx "38" cy "58" r "2" fill "rgba(255,255,255,0.1)"/>
+  </g>
+  <g class="cheek_R">
+    <circle cx "62" cy "58" r "2" fill "rgba(255,255,255,0.1)"/>
+  </g>
+  
+  <g class="mouth_closed">
+    <path d "M44 72 Q50 78 56 72"/>
+  </g>
+  <g class="mouth_open"/>
+  
+  <g class="glasses"/>
+  
+  <g class="accessory">
+    <g fill="url(#crown-metal)"/>
+  </g>
+  
+  <g class="frame_rim" stroke "rgba(255,255,255,0.2)" stroke-width "1.5" fill "none">
+    <path d "M2 2 Q2 2 20 2 Q20 2 20 20 Q20 94 2 94 Q2 94 2 86 Z"/>
+  </g>
+</svg>

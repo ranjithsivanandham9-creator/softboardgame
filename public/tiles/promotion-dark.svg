@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 96 96" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dark theme -->
+    <linearGradient id="promo-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#1F1F23"/>
+      <stop offset="100%" stopColor="#18181B"/>
+    </linearGradient>
+    <linearGradient id="promo-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#4A4A5A"/>
+      <stop offset="100%" stopColor="#27272A"/>
+    </linearGradient>
+    <linearGradient id="promo-highlight" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#27272A"/>
+      <stop offset="100%" stopColor="#18181B"/>
+    </linearGradient>
+    <linearGradient id="green-pipe" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#22C55E"/>
+      <stop offset="100%" stopColor="#16A34A"/>
+    </linearGradient>
+    <linearGradient id="rim-light-dark2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop="rgba(255,255,255,0.15)"/>
+      <stop offset="100%" stop="rgba(255,255,255,0.05)"/>
+    </linearGradient>
+  </defs>
+  
+  <g class="bg">
+    <rect width="96" height="96" fill="url(#promo-base)"/>
+  </g>
+  
+  <g class="body" fill="url(#promo-base)">
+    <!-- Server rack base -->
+    <rect x="8" y="8" width="80" height="72" rx="6" fill="url(#promo-base)"/>
+    <!-- Green pipeline connector with up arrow -->
+    <g fill="url(#green-pipe)">
+      <!-- Pipeline -->
+      <path d="M24 32 Q24 24 32 24 Q36 24 36 32 Q36 40 28 40 Q20 40 20 32 Q20 24 28 24 Q32 24 32 32 Z"/>
+      <!-- Up arrow -->
+      <polygon points="36,24 40,16 44,24" fill="url(#green-pipe)"/>
+    </g>
+    <!-- Progression indicators -->
+    <g fill="rgba(255,255,255,0.3)">
+      <circle cx="20" cy="24" r="3"/>
+      <circle cx="36" cy="24" r="3"/>
+      <circle cx="52" cy="24" r="3"/>
+      <circle cx="68" cy="24" r="3"/>
+    </g>
+  </g>
+  
+  <g class="neck">
+    <line x1="50" y1="80" x2="50" y2="84" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  </g>
+  
+  <g class="head">
+    <polygon points="48,84 56,80 56,84 48,88" fill="url(#rim-light)"/>
+    <text x="52" y="86" text-anchor="middle" font-family="Geist Mono, monospace" font-size="5" fill="#FFFFFF" font-weight="700">▲</text>
+  </g>
+  
+  <g class="ear_L"/>
+  <g class="ear_R"/>
+  <g class="hair_back"/>
+  <g class="hair_front"/>
+  <g class="brow_L"/>
+  <g class="brow_R"/>
+  
+  <g class="eye_L">
+    <circle cx="30" cy="48" r="5" fill="#22C55E" opacity="0.9"/>
+    <circle cx="30" cy="48" r="2" fill="rgba(255,255,255,0.4)"/>
+  </g>
+  <g class="eye_R">
+    <circle cx="66" cy="48" r="5" fill="#22C55E" opacity="0.9"/>
+    <circle cx="66" cy="48" r="2" fill="rgba(255,255,255,0.4)"/>
+  </g>
+  
+  <g class="nose">
+    <rect x="48" y="54" width="4" height="5" fill="rgba(255,255,255,0.2)"/>
+  </g>
+  
+  <g class="cheek_L"/>
+  <g class="cheek_R"/>
+  
+  <g class="mouth_closed"/>
+  <g class="mouth_open"/>
+  
+  <g class="glasses"/>
+  
+  <g class="accessory">
+    <g fill="url(#green-pipe)">
+      <polygon points="40,72 44,68 48,72 44,76"/>
+    </g>
+    <text x="50" y="76" text-anchor="middle" font-family="Geist Mono, monospace" font-size="5" fill="#FFFFFF" font-weight="700">▲</text>
+  </g>
+  
+  <g class="frame_rim" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none">
+    <path d="M2 2 Q2 2 20 2 Q20 2 20 20 Q20 94 2 94 Q2 94 2 86 Z"/>
+  </g>
+</svg>

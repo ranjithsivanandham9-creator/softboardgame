@@ -1,0 +1,127 @@
+{
+  "growth_stacks": [
+    {
+      "id": "g1",
+      "title": "Leetcode Grind",
+      "flavor": "Your personal coding practice pays off",
+      "effects": ["RSU_GAIN(0.15)"]
+    },
+    {
+      "id": "g2",
+      "title": "AI Hype Train Hijack",
+      "flavor": "AI spin gets +3 points this turn",
+      "effects": ["WHEEL_BOOST(3)"]
+    },
+    {
+      "id": "g3",
+      "title": "Heroic Silent Rollback",
+      "flavor": "Undo a costly mistake without RSU penalty",
+      "effects": ["MOVE_BACK(-0.1)"]
+    },
+    {
+      "id": "g4",
+      "title": "Mandatory Synergy Offsite",
+      "flavor": "Forced fun that actually builds team cohesion",
+      "effects": ["SWAP_LEADER_LAST"]
+    },
+    {
+      "id": "g5",
+      "title": "Open Source Attribution Disaster",
+      "flavor": "Finally contributing to an important project",
+      "effects": ["RSU_GAIN(0.1)"]
+    },
+    {
+      "id": "g6",
+      "title": "Infinite Sync Loop",
+      "flavor": "Endless iteration leads to promotion",
+      "effects": ["WHEEL_BOOST(2)"]
+    },
+    {
+      "id": "g7",
+      "title": "Quarterly Review Surprise",
+      "flavor": "Bonus RSUs for unexpected contribution",
+      "effects": ["RSU_GAIN(0.2)"]
+    },
+    {
+      "id": "g8",
+      "title": "Team Celebration Win",
+      "flavor": "Celebration boosts morale and points",
+      "effects": ["WHEEL_BOOST(1)"]
+    },
+    {
+      "id": "g9",
+      "title": "Product Launch Success",
+      "flavor": "Successful launch increases valuation",
+      "effects": ["RSU_GAIN(0.25)"]
+    },
+    {
+      "id": "g10",
+      "title": "Hiring Freeze Lift",
+      "flavor": "New talent brings fresh opportunities",
+      "effects": ["MOVE_FORWARD(0.15)"]
+    }
+  ],
+
+  "downsizing_stacks": [
+    {
+      "id": "d1",
+      "title": "RTO Mandate",
+      "flavor": "Back to the office, all hands on deck",
+      "effects": ["RSU_LOSS_ALL(0.2)"]
+    },
+    {
+      "id": "d2",
+      "title": "AI Hype Train Crash",
+      "flavor": "AI project fails, lose your AI spin bonus",
+      "effects": ["WHEEL_PENALTY(3)"]
+    },
+    {
+      "id": "d3",
+      "title": "Reorganization",
+      "flavor": "Your role is eliminated",
+      "effects": ["MOVE_BACK(0.25)"]
+    },
+    {
+      "id": "d4",
+      "title": "Forced Rank",
+      "flavor": "Stack ranking puts you at the bottom",
+      "effects": ["MOVE_BACK(0.15)"]
+    },
+    {
+      "id": "d5",
+      "title": "Budget Cuts",
+      "flavor": "Across-the-board spending reduction",
+      "effects": ["RSU_LOSS_ALL(0.1)"]
+    },
+    {
+      "id": "d6",
+      "title": "Meeting Overload",
+      "flavor": "All day meetings, no code shipped",
+      "effects": ["SKIP_TURN"]
+    },
+    {
+      "id": "d7",
+      "title": "PIP Received",
+      "flavor": "Performance Improvement Plan",
+      "effects": ["RSU_LOSS_ALL(0.25)"]
+    },
+    {
+      "id": "d8",
+      "title": "Equity Audit Finding",
+      "flavor": "Compliance issue requires RSU restitution",
+      "effects": ["RSU_LOSS_ALL(0.15)"]
+    },
+    {
+      "id": "d9",
+      "title": "Equity Audit Finding",
+      "flavor": "Compliance issue requires RSU restitution",
+      "effects": ["RSU_LOSS_ALL(0.15)"]
+    },
+    {
+      "id": "d10",
+      "title": "Layoff Warning",
+      "flavor": "Your ring is next on the collapse list",
+      "effects": ["FREEZE_ZONE(3)"]
+    }
+  ]
+}

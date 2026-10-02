@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 96 96" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dark theme -->
+    <linearGradient id="laidoff-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#E2AE86"/>
+      <stop offset="100%" stopColor "#D29E78"/>
+    </linearGradient>
+    <linearGradient id="laidoff-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#C4B5A0"/>
+      <stop offset="100%" stopColor "#A5A5A5"/>
+    </linearGradient>
+    <linearGradient id="laidoff-highlight" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#F5E9DC"/>
+      <stop offset="100%" stopColor "#E8D5C8"/>
+    </linearGradient>
+    <linearGradient id="cardboard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#F3F4F6"/>
+      <stop offset="100%" stopColor "#E5E7EB"/>
+    </linearGradient>
+    <linearGradient id="plant" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#22C55E"/>
+      <stop offset="100%" stopColor "#16A34A"/>
+    </linearGradient>
+    <linearGradient id="rim-light-laidoff" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop="rgba(255,255,255,0.1)"/>
+      <stop offset="100%" stop="none"/>
+    </linearGradient>
+  </defs>
+  
+  <g class="bg">
+    <rect width="96" height="96" fill="url(#laidoff-base)"/>
+  </g>
+  
+  <g class="body" fill="url(#laidoff-base)">
+    <!-- Laid off - cardboard box -->
+    <path d="M12 12 L84 12 L84 84 L12 84 Z" rx "8" fill "url(#cardboard)"/>
+    <!-- Box texture lines -->
+    <g fill "none" stroke "rgba(0,0,0,0.2)" stroke-width "1">
+      <line x1 "12" y1 "12" x2 "84" y2 "12"/>
+      <line x1 "12" y1 "24" x2 "84" y2 "24"/>
+      <line x1 "12" y1 "36" x2 "84" y2 "36"/>
+      <line x1 "12" y1 "48" x2 "84" y2 "48"/>
+      <line x1 "12" y1 "60" x2 "84" y2 "60"/>
+      <line x1 "12" y1 "72" x2 "84" y2 "72"/>
+    </g>
+    <!-- Plant in box -->
+    <g fill="url(#plant)">
+      <ellipse cx "50" cy "50" r "10"/>
+      <path d "M50 40 Q50 30 45 30 Q40 30 40 40 Q40 50 45 50 Q50 50 50 40 Z M50 60 Q50 55 48 55 Q46 55 46 60 Q46 65 50 65 Q54 65 54 60 Q50 60 50 60 Z"/>
+    </g>
+  </g>
+  
+  <g class="neck">
+    <line x1 "50" y1 "84" x2 "50" y2 "88" stroke "rgba(255,255,255,0.2)" stroke-width "1"/>
+  </g>
+  
+  <g class="head">
+    <polygon points "48 84 56 80 56 84 48 88" fill "url(#rim-light-laidoff)"/>
+    <text x "52" y "85" text-anchor "middle" font-family "Geist Mono, monospace" font-size "5" fill "#F59E0B" font-weight "700">📦</text>
+  </g>
+  
+  <g class="ear_L"/>
+  <g class="ear_R"/>
+  <g class="hair_back"/>
+  <g class="hair_front"/>
+  <g class="brow_L"/>
+  <g class="brow_R"/>
+  
+  <g class="eye_L">
+    <circle cx "30" cy "48" r "3" fill "rgba(255,255,255,0.2)"/>
+  </g>
+  <g class="eye_R">
+    <circle cx "66" cy "48" r "3" fill "rgba(255,255,255,0.2)"/>
+  </g>
+  
+  <g class="nose">
+    <rect x "48" y "54" width "4" height "3" fill "rgba(255,255,255,0.1)"/>
+  </g>
+  
+  <g class="cheek_L">
+    <circle cx "38" cy "58" r "2" fill "rgba(255,255,255,0.1)"/>
+  </g>
+  <g class="cheek_R">
+    <circle cx "62" cy "58" r "2" fill "rgba(255,255,255,0.1)"/>
+  </g>
+  
+  <g class="mouth_closed">
+    <path d "M44 72 Q50 78 56 72"/>
+  </g>
+  <g class="mouth_open"/>
+  
+  <g class="glasses"/>
+  
+  <g class="accessory">
+    <g fill="url(#cardboard)"/>
+  </g>
+  
+  <g class="frame_rim" stroke "rgba(255,255,255,0.1)" stroke-width "1.5" fill "none">
+    <path d "M2 2 Q2 2 20 2 Q20 2 20 20 Q20 94 2 94 Q2 94 2 86 Z"/>
+  </g>
+</svg>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 96 96" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="trap-base-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#EF4444"/>
+      <stop offset="100%" stopColor "#DC2626"/>
+    </linearGradient>
+    <linearGradient id="trap-shadow-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#FCA5A5"/>
+      <stop offset="100%" stopColor "#F87171"/>
+    </linearGradient>
+    <linearGradient id="trap-highlight-light" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#F87171"/>
+      <stop offset="100%" stopColor "#EF4444"/>
+    </linearGradient>
+    <linearGradient id="diagonal-stripe-light2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop="rgba(0,0,0,0.1)"/>
+      <stop offset="20%" stop="transparent"/>
+      <stop offset="40%" stop="rgba(0,0,0,0.1)"/>
+      <stop offset="60%" stop="transparent"/>
+      <stop offset="80%" stop="rgba(0,0,0,0.1)"/>
+    </linearGradient>
+    <linearGradient id="rim-light-trap-light2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop="rgba(0,0,0,0.1)"/>
+      <stop offset="100%" stop="rgba(0,0,0,0.05)"/>
+    </linearGradient>
+  </defs>
+  
+  <g class="bg">
+    <rect width="96" height="96" fill="url(#trap-base-light)"/>
+  </g>
+  
+  <g class="body" fill="url(#trap-base-light)">
+    <path d="M8 8 L88 8 L88 88 L8 88 Z" rx="8" fill="url(#trap-base-light)"/>
+    <path d="M8 8 L88 88 M88 8 L8 88" stroke="url(#diagonal-stripe-light2)" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <g fill="rgba(255,255,255,0.1)">
+      <circle cx="50" cy="50" r="12"/>
+      <path d="M44 50 Q50 44 56 50" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+  
+  <g class="neck">
+    <line x1="50" y1="96" x2="50" y2="100" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
+  </g>
+  
+  <g class="head">
+    <polygon points="48,96 56,92 56,96 48,100" fill="url(#rim-light-trap-light2)"/>
+    <text x="52" y="93" text-anchor="middle" font-family="Geist Mono, monospace" font-size="6" fill="#EF4444" font-weight="700">▼</text>
+  </g>
+  
+  <g class="ear_L"/>
+  <g class="ear_R"/>
+  <g class="hair_back"/>
+  <g class="hair_front"/>
+  <g class="brow_L"/>
+  <g class="brow_R"/>
+  
+  <g class="eye_L">
+    <circle cx="30" cy="48" r="5" fill="#EF4444" opacity="0.8"/>
+    <circle cx="30" cy="48" r="2" fill="rgba(0,0,0,0.3)"/>
+  </g>
+  <g class="eye_R">
+    <circle cx="66" cy="48" r="5" fill="#EF4444" opacity="0.8"/>
+    <circle cx="66" cy="48" r="2" fill="rgba(0,0,0,0.3)"/>
+  </g>
+  
+  <g class="nose">
+    <rect x="48" y="58" width="4" height="5" fill="#EF4444"/>
+  </g>
+  
+  <g class="cheek_L">
+    <circle cx="38" cy="62" r="3" fill="rgba(255,255,255,0.1)"/>
+  </g>
+  <g class="cheek_R">
+    <circle cx="62" cy="62" r="3" fill="rgba(255,255,255,0.1)"/>
+  </g>
+  
+  <g class="mouth_closed">
+    <path d="M44 76 Q50 82 56 76"/>
+  </g>
+  <g class="mouth_open"/>
+  
+  <g class="glasses"/>
+  <g class="accessory">
+    <g fill="url(#diagonal-stripe-light2)"/>
+  </g>
+  
+  <g class="frame_rim" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" fill="none">
+    <path d="M2 2 Q2 2 20 2 Q20 2 20 20 Q20 96 2 96 Q2 96 2 88 Z"/>
+  </g>
+</svg>

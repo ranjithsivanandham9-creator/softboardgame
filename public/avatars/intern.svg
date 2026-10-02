@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 428" width="400" height="428" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Light peach skin -->
+    <linearGradient id="intern-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#F1C9A5"/>
+      <stop offset="100%" stopColor="#FDC8B0"/>
+    </linearGradient>
+    <!-- Shadow gradient -->
+    <linearGradient id="intern-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#8A4B1F"/>
+      <stop offset="100%" stopColor="#6A3815"/>
+    </linearGradient>
+    <!-- Highlight gradient -->
+    <linearGradient id="intern-highlight" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#FFF8F0"/>
+      <stop offset="100%" stopColor="#F5D0C0"/>
+    </linearGradient>
+    <!-- Company lanyard badge -->
+    <linearGradient id="badge-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#FFFFFF"/>
+      <stop offset="100%" stopColor="#F0F0F0"/>
+    </linearGradient>
+    <!-- Emerald tee -->
+    <linearGradient id="emerald-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#22C55E"/>
+      <stop offset="100%" stopColor="#1E8E3E"/>
+    </linearGradient>
+    <!-- Forest green backdrop -->
+    <linearGradient id="forest-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#12483B"/>
+      <stop offset="100%" stopColor="#0A3025"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- BG - Forest green backdrop -->
+  <g class="bg">
+    <rect x="0" y="0" width="400" height="428" fill="url(#forest-bg)"/>
+    <!-- Gradient overlay -->
+    <rect x="0" y="0" width="400" height="428" fill="rgba(0,0,0,0.3)"/>
+  </g>
+  
+  <!-- Body - Emerald tee -->
+  <g class="body" fill="url(#emerald-base)">
+    <path d="M150 200 Q100 260 150 320 Q200 380 250 320 Q300 260 250 200 Q200 140 150 140 Z"/>
+    <!-- Company lanyard -->
+    <rect x="170" y="150" width "60" height="30" fill="url(#badge-base)"/>
+    <text x="200" y="175" text-anchor="middle" font-family="Geist Mono, monospace" font-size="8" fill="#22C55E" font-weight="700">BADGE</text>
+  </g>
+  
+  <!-- Neck -->
+  <g class="neck">
+    <rect x="195" y="320" width="10" height="15" fill="#22C55E" rx="1"/>
+  </g>
+  
+  <!-- Head -->
+  <g class="head">
+    <ellipse cx="200" cy="214" rx="170" ry="180" fill="url(#intern-base)"/>
+    <!-- Slight head tilt -->
+    <path d="M200 30 Q200 25 200 30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  </g>
+  
+  <!-- Ear_L -->
+  <g class="ear_L">
+    <ellipse cx="130" cy="220" rx="20" ry="25" fill="url(#intern-base)"/>
+    <path d="M130 220 Q120 210 125 215 Q135 220 135 230 Q130 235 130 230" fill="none" stroke="#22C55E" stroke-width="1"/>
+  </g>
+  
+  <!-- Ear_R -->
+  <g class="ear_R">
+    <ellipse cx="270" cy="220" rx="20" ry="25" fill="url(#intern-base)"/>
+    <path d="M270 220 Q280 210 275 215 Q265 220 265 230 Q270 235 270 230" fill="none" stroke="#22C55E" stroke-width="1"/>
+  </g>
+  
+  <!-- hair_back -->
+  <g class="hair_back" fill="url(#intern-base)">
+    <!-- Short copper hair -->
+    <path d="M110 170 Q90 160 100 150 Q95 140 105 130 Q90 120 100 110 Z"/>
+    <path d="M130 180 Q110 170 120 160 Q115 150 125 140 Z"/>
+  </g>
+  
+  <!-- hair_front -->
+  <g class="hair_front" fill="url(#intern-base)">
+    <!-- Messy copper fringe -->
+    <path d="M180 130 Q170 110 190 100 Q180 90 200 100 Q190 110 180 120 Q170 130 170 140 Q175 150 170 160"/>
+    <path d="M200 120 Q190 100 210 90 Q200 80 220 90 Q210 100 200 110 Q190 120 190 130"/>
+  </g>
+  
+  <!-- brow_L -->
+  <g class="brow_L" fill="#8A4B1F">
+    <!-- Expressive raised brow -->
+    <path d="M130 160 Q120 155 140 150 Q125 165 135 160 Z"/>
+    <path d="M135 155 Q130 150 145 150 Q135 155 140 158 Z"/>
+  </g>
+  
+  <!-- brow_R -->
+  <g class="brow_R" fill="#8A4B1F">
+    <!-- Expressive raised brow -->
+    <path d="M270 160 Q280 155 270 150 Q265 165 275 160 Z"/>
+    <path d="M265 155 Q260 150 270 150 Q265 155 270 158 Z"/>
+  </g>
+  
+  <!-- eye_L -->
+  <g class="eye_L" transform-box="fill-box">
+    <!-- Sclera -->
+    <circle cx="150" cy="200" r="35" fill="#FFF" stroke="none"/>
+    <!-- Iris - large bright eyes -->
+    <circle cx="150" cy="200" r="20" fill="#FFF"/>
+    <!-- Pupil -->
+    <circle cx="150" cy="200" r="10" fill="#1A1410"/>
+    <!-- Double highlight -->
+    <circle cx="148" cy="198" r="4" fill="#FFF" opacity="0.8"/>
+    <circle cx="145" cy="195" r="3" fill="#FFF" opacity="0.6"/>
+    <!-- Lower lid -->
+    <path d="M140 210 Q150 215 160 210 Q152 218 138 220 Z" fill="url(#intern-highlight)" opacity="0.2"/>
+  </g>
+  
+  <!-- eye_R -->
+  <g class="eye_R" transform-box="fill-box">
+    <!-- Sclera -->
+    <circle cx="250" cy="200" r="35" fill="#FFF" stroke="none"/>
+    <!-- Iris - large bright eyes -->
+    <circle cx="250" cy="200" r="20" fill="#FFF"/>
+    <!-- Pupil -->
+    <circle cx="250" cy="200" r="10" fill="#1A1410"/>
+    <!-- Double highlight -->
+    <circle cx="248" cy="198" r="4" fill="#FFF" opacity="0.8"/>
+    <circle cx="245" cy="195" r="3" fill="#FFF" opacity="0.6"/>
+    <!-- Lower lid -->
+    <path d="M240 210 Q250 215 260 210 Q248 218 262 220 Z" fill="url(#intern-highlight)" opacity="0.2"/>
+  </g>
+  
+  <!-- nose -->
+  <g class="nose">
+    <ellipse cx="200" cy="235" rx="10" ry="8" fill="#8A4B1F"/>
+  </g>
+  
+  <!-- cheek_L -->
+  <g class="cheek_L">
+    <circle cx="155" cy="245" r="8" fill="#F1C9A5" opacity="0.5"/>
+  </g>
+  
+  <!-- cheek_R -->
+  <g class="cheek_R">
+    <circle cx="245" cy="245" r="8" fill="#F1C9A5" opacity="0.5"/>
+  </g>
+  
+  <!-- mouth_closed -->
+  <g class="mouth_closed">
+    <path d="M180 260 Q200 275 220 260" fill="none" stroke="#8A4B1F" stroke-width="1.5"/>
+    <!-- Big toothy grin -->
+    <path d="M180 260 Q200 270 220 260 Q210 265 200 255 Q190 265 180 260 Z" fill="#FFF" opacity="0.8"/>
+  </g>
+  
+  <!-- mouth_open (hidden by default) -->
+  <g class="mouth_open" opacity="0">
+    <path d="M160 250 Q180 230 200 250 Q190 260 200 270 Q170 280 160 270 Z" fill="#FFF" opacity="0.9"/>
+  </g>
+  
+  <!-- glasses -->
+  <g class="glasses" opacity="0">
+    <ellipse cx="200" cy="200" rx="45" ry="35" fill="none" stroke="#22C55E" stroke-width="1"/>
+  </g>
+  
+  <!-- accessory - company lanyard -->
+  <g class="accessory">
+    <rect x="170" y="150" width="60" height="25" fill="url(#badge-base)"/>
+    <text x="200" y="170" text-anchor="middle" font-family="Geist Mono, monospace" font-size="7" fill="#22C55E" font-weight="700">LAB</text>
+  </g>
+  
+  <!-- frame_rim -->
+  <g class="frame_rim" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none">
+    <path d="M10 10 Q10 0 50 0 Q90 0 90 10 Q90 50 50 50 Q10 50 10 10 Z"/>
+  </g>
+</svg>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 428" width="400" height="428" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Base gradient for tan skin -->
+    <linearGradient id="dev-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#E8B98F"/>
+      <stop offset="100%" stopColor="#D4A67E"/>
+    </linearGradient>
+    <!-- Shadow gradient -->
+    <linearGradient id="dev-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#2B2118"/>
+      <stop offset="100%" stopColor="#1A1410"/>
+    </linearGradient>
+    <!-- Highlight gradient -->
+    <linearGradient id="dev-highlight" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#F5D6C3"/>
+      <stop offset="100%" stopColor="#F0C0A5"/>
+    </linearGradient>
+    <!-- Coffee mug -->
+    <linearGradient id="mug-base" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#FAFAFA"/>
+      <stop offset="100%" stopColor="#E0E0E0"/>
+    </linearGradient>
+    <!-- Steam -->
+    <linearGradient id="steam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="rgba(255,255,255,0.8)"/>
+      <stop offset="100%" stopColor="rgba(200,180,160,0.4)"/>
+    </linearGradient>
+    <!-- Deep purple backdrop -->
+    <linearGradient id="purple-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#3B2F5E"/>
+      <stop offset="100%" stopColor="#2A1F44"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- BG - Deep purple backdrop disc -->
+  <g class="bg">
+    <circle cx="200" cy="214" r="180" fill="url(#purple-bg)"/>
+  </g>
+  
+  <!-- Body - Slate hoodie -->
+  <g class="body" fill="url(#dev-base)">
+    <path d="M150 200 Q100 250 150 300 Q200 350 250 300 Q300 250 250 200 Q200 150 150 150 Z"/>
+    <!-- Hood drawstrings -->
+    <path d="M140 160 Q130 140 120 150 Q130 160 140 170" stroke="#4B4F73" stroke-width="2" fill="none"/>
+    <path d="M260 160 Q270 140 280 150 Q270 160 280 170" stroke="#4B4F73" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Neck -->
+  <g class="neck">
+    <rect x="195" y="300" width="10" height="20" fill="#4B4F73" rx="2"/>
+  </g>
+  
+  <!-- Head -->
+  <g class="head">
+    <!-- Head main shape -->
+    <ellipse cx="200" cy="214" rx="180" ry="190" fill="url(#dev-base)"/>
+    <!-- Top of head - slightly flattened -->
+    <path d="M200 30 Q200 20 200 30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  </g>
+  
+  <!-- Ear_L -->
+  <g class="ear_L">
+    <ellipse cx="130" cy="220" rx="25" ry="30" fill="url(#dev-base)"/>
+    <!-- Ear details -->
+    <path d="M130 220 Q120 210 125 215 Q135 220 135 230 Q130 235 130 230" fill="none" stroke="#4B4F73" stroke-width="1"/>
+  </g>
+  
+  <!-- Ear_R -->
+  <g class="ear_R">
+    <ellipse cx="270" cy="220" rx="25" ry="30" fill="url(#dev-base)"/>
+    <!-- Ear details -->
+    <path d="M270 220 Q280 210 275 215 Q265 220 265 230 Q270 235 270 230" fill="none" stroke="#4B4F73" stroke-width="1"/>
+  </g>
+  
+  <!-- hair_back -->
+  <g class="hair_back" fill="url(#dev-base)">
+    <!-- Back hair - loose waves -->
+    <path d="M100 180 Q80 170 90 160 Q70 150 80 140 Q90 130 70 120 Z"/>
+    <path d="M120 190 Q100 180 110 170 Q90 160 100 150 Z"/>
+    <path d="M140 180 Q120 170 130 160 Q110 150 120 140 Z"/>
+  </g>
+  
+  <!-- hair_front -->
+  <g class="hair_front" fill="url(#dev-base)">
+    <!-- Front hair - messy tufts -->
+    <path d="M180 140 Q170 120 190 110 Q180 100 200 110 Q190 120 180 130 Q170 140 170 150 Q180 160 170 170"/>
+    <path d="M200 130 Q190 110 210 100 Q200 90 220 100 Q210 110 200 120 Q190 130 190 140"/>
+    <path d="M220 140 Q210 120 230 110 Q220 100 240 110 Q230 120 220 130 Q210 140 210 150"/>
+  </g>
+  
+  <!-- brow_L -->
+  <g class="brow_L" fill="#2B2118">
+    <!-- Thick brow with tufts -->
+    <path d="M130 170 Q120 165 135 160 Q125 175 135 170 Q130 185 135 180 Z"/>
+    <path d="M135 165 Q130 160 140 160 Q135 165 140 168 Z"/>
+  </g>
+  
+  <!-- brow_R -->
+  <g class="brow_R" fill="#2B2118">
+    <!-- Thick brow with tufts -->
+    <path d="M270 170 Q280 165 275 160 Q265 175 275 170 Q270 185 275 180 Z"/>
+    <path d="M265 165 Q260 160 270 160 Q265 165 270 168 Z"/>
+  </g>
+  
+  <!-- eye_L -->
+  <g class="eye_L" transform-box="fill-box">
+    <!-- Sclera -->
+    <circle cx="150" cy="200" r="35" fill="#FFF" stroke="none"/>
+    <!-- Iris -->
+    <circle cx="150" cy="200" r="18" fill="#2B2118"/>
+    <!-- Pupil -->
+    <circle cx="150" cy="200" r="8" fill="#1A1410"/>
+    <!-- Highlight -->
+    <circle cx="145" cy="195" r="5" fill="#FFF" opacity="0.6"/>
+    <!-- Upper lid -->
+    <path d="M130 190 Q150 185 170 190 Q155 195 135 198 Z" fill="url(#dev-highlight)" opacity="0.3"/>
+  </g>
+  
+  <!-- eye_R -->
+  <g class="eye_R" transform-box="fill-box">
+    <!-- Sclera -->
+    <circle cx="250" cy="200" r="35" fill="#FFF" stroke="none"/>
+    <!-- Iris -->
+    <circle cx="250" cy="200" r="18" fill="#2B2118"/>
+    <!-- Pupil -->
+    <circle cx="250" cy="200" r="8" fill="#1A1410"/>
+    <!-- Highlight -->
+    <circle cx="245" cy="195" r="5" fill="#FFF" opacity="0.6"/>
+    <!-- Upper lid -->
+    <path d="M230 190 Q250 185 270 190 Q245 195 265 198 Z" fill="url(#dev-highlight)" opacity="0.3"/>
+  </g>
+  
+  <!-- nose -->
+  <g class="nose">
+    <ellipse cx="200" cy="230" rx="15" ry="12" fill="#2B2118"/>
+  </g>
+  
+  <!-- cheek_L -->
+  <g class="cheek_L">
+    <circle cx="160" cy="240" r="12" fill="#E8B98F" opacity="0.4"/>
+  </g>
+  
+  <!-- cheek_R -->
+  <g class="cheek_R">
+    <circle cx="240" cy="240" r="12" fill="#E8B98F" opacity="0.4"/>
+  </g>
+  
+  <!-- mouth_closed -->
+  <g class="mouth_closed">
+    <path d="M180 260 Q200 270 220 260" fill="none" stroke="#2B2118" stroke-width="1.5"/>
+  </g>
+  
+  <!-- mouth_open (hidden by default) -->
+  <g class="mouth_open" opacity="0">
+    <path d="M170 250 Q190 240 210 250 Q200 260 210 270 Q190 280 170 270 Z" fill="#2B2118"/>
+  </g>
+  
+  <!-- glasses -->
+  <g class="glasses" opacity="0">
+    <ellipse cx="200" cy="200" rx="50" ry="40" fill="none" stroke="#4B4F73" stroke-width="1"/>
+    <circle cx="160" cy="200" r="12" fill="#4B4F73"/>
+    <circle cx="240" cy="200" r="12" fill="#4B4F73"/>
+  </g>
+  
+  <!-- accessory - coffee mug -->
+  <g class="accessory">
+    <!-- Mug body -->
+    <ellipse cx="200" cy="340" rx="50" ry="20" fill="url(#mug-base)"/>
+    <!-- Mug handle -->
+    <path d="M230 330 Q250 340 240 330 Q250 320 230 310 Z" fill="url(#mug-base)"/>
+    <!-- Steam -->
+    <path d="M180 320 Q170 310 160 320 Q170 330 180 325 Q175 322 180 322" fill="url(#steam)"/>
+  </g>
+  
+  <!-- frame_rim - rounded sticker frame -->
+  <g class="frame_rim" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none">
+    <path d="M10 10 Q10 0 50 0 Q90 0 90 10 Q90 50 50 50 Q10 50 10 10 Z" transform="translate(0)"/>
+  </g>
+  
+  <!-- Three-tone shading guide (comment only, actual shading in paths) -->
+</svg>

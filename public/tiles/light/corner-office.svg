@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 96 96" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="office-base-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#F9FAFB"/>
+      <stop offset="100%" stopColor "#F4F4F5"/>
+    </linearGradient>
+    <linearGradient id="office-shadow-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#D1D5DB"/>
+      <stop offset="100%" stopColor "#9CA3AF"/>
+    </linearGradient>
+    <linearGradient id="office-highlight-light" x1="0%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#9CA3AF"/>
+      <stop offset="100%" stopColor "#F9FAFB"/>
+    </linearGradient>
+    <linearGradient id="crown-metal-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor "#F59E0B"/>
+      <stop offset="100%" stopColor="#EAB308"/>
+    </linearGradient>
+    <linearGradient id="rim-light-office-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop="rgba(0,0,0,0.1)"/>
+      <stop offset="100%" stop="rgba(0,0,0,0.05)"/>
+    </linearGradient>
+  </defs>
+  
+  <g class="bg">
+    <rect width="96" height="96" fill="url(#office-base-light)"/>
+  </g>
+  
+  <g class="body" fill="url(#office-base-light)">
+    <rect x="16" y="24" width "64" height "48" rx "8" fill="url(#office-base-light)"/>
+    <rect x "32" y "36" width "32" height "8" fill="rgba(0,0,0,0.1)"/>
+    <g fill="url(#crown-metal-light)">
+      <polygon points="32 24 64 24 64 32 32 32 Z"/>
+      <polygon points="36 16 60 16 60 24 36 24 Z"/>
+      <polygon points="40 8 56 8 56 16 40 16 Z"/>
+    </g>
+    <text x="50" y="20" text-anchor="middle" font-family="Geist Mono, monospace" font-size="6" fill "#FFFFFF" font-weight="700">CAIBO</text>
+    <path d="M32 2 Help desk

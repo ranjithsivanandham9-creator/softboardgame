@@ -1,0 +1,58 @@
+{
+  "catalysts": [
+    { "id": "c1", "text": "Missed Deadline", "tags": ["rto", "ai_hype", "meeting"] },
+    { "id": "c2", "text": "RTO Mandate", "tags": ["rto", "productivity"] },
+    { "id": "c3", "text": "AI Hype", "tags": ["ai_hype", "productivity"] },
+    { "id": "c4", "text": "Equity Concerns", "tags": ["equity", "fairness"] },
+    { "id": "c5", "text": "Reorganization", "tags": ["reorg", "restructuring"] },
+    { "id": "c6", "text": "Meeting Overload", "tags": ["meeting", "productivity"] },
+    { "id": "c7", "text": "Budget Cuts", "tags": ["budget", "finance"] },
+    { "id": "c8", "text": "PIP Received", "tags": ["pip", "performance"] },
+    { "id": "c9", "text": "Equity Audit", "tags": ["equity", "compliance"] },
+    { "id": "c10", "text": "AI Project Failure", "tags": ["ai_hype", "failure"] }
+  ],
+
+  "targets": [
+    { "id": "t1", "text": "Engineering Team", "tags": ["engineering", "team"] },
+    { "id": "t2", "text": "Product Team", "tags": ["product", "team"] },
+    { "id": "t3", "text": "Design Team", "tags": ["design", "team"] },
+    { "id": "t4", "text": "Sales Team", "tags": ["sales", "team"] },
+    { "id": "t5", "text": "Marketing Team", "tags": ["marketing", "team"] },
+    { "id": "t6", "text": "Finance Team", "tags": ["finance", "team"] },
+    { "id": "t7", "text": "Executive Team", "tags": ["executive", "team"] },
+    { "id": "t8", "text": "All Employees", "tags": ["company", "wide"] }
+  ],
+
+  "fallouts": [
+    { "id": "f1", "type": "RSU_LOSS_ALL", "magnitude": 0.3, "tags": ["performance"] },
+    { "id": "f2", "type": "RSU_GAIN", "magnitude": 0.2, "tags": ["performance"] },
+    { "id": "f3", "type": "MOVE_BACK", "magnitude": 0.15, "tags": ["performance"] },
+    { "id": "f4", "type": "SWAP_LEADER_LAST", "magnitude": 0, "tags": ["leadership"] },
+    { "id": "f5", "type": "FREEZE_ZONE", "magnitude": 3, "tags": ["freeze"] },
+    { "id": "f6", "type": "SKIP_TURN", "magnitude": 1, "tags": ["turn"] },
+
+    { "id": "f7", "type": "RSU_LOSS_ALL", "magnitude": 0.5, "tags": ["piip"] },
+    { "id": "f8", "type": "RSU_GAIN", "magnitude": 0.25, "tags": ["piip"] },
+    { "id": "f9", "type": "MOVE_BACK", "magnitude": 0.2, "tags": ["piip"] },
+    { "id": "f10", "type": "FREEZE_ZONE", "magnitude": 2, "tags": ["piip"] },
+
+    { "id": "f11", "type": "RSU_LOSS_ALL", "magnitude": 0.1, "tags": ["general"] },
+    { "id": "f12", "type": "RSU_GAIN", "magnitude": 0.15, "tags": ["general"] },
+
+    { "id": "f13", "type": "MOVE_BACK", "magnitude": 0.1, "tags": ["general"] },
+    { "id": "f14", "type": "SWAP_LEADER_LAST", "magnitude": 0, "tags": ["general"] }
+  ],
+
+  "incident_templates": [
+    { "catalyst_id": "c1", "target_id": "t1", "fallout_ids": ["f1", "f3"] },
+    { "catalyst_id": "c2", "target_id": "t1", "fallout_ids": ["f2", "f5"] },
+    { "catalyst_id": "c3", "target_id": "t4", "fallout_ids": ["f4", "f6"] },
+    { "catalyst_id": "c4", "target_id": "t5", "fallout_ids": ["f1", "f7"] },
+    { "catalyst_id": "c5", "target_id": "t2", "fallout_ids": ["f3", "f8"] },
+    { "catalyst_id": "c6", "target_id": "t3", "fallout_ids": ["f5", "f9"] },
+    { "catalyst_id": "c7", "target_id": "t6", "fallout_ids": ["f2", "f10"] },
+    { "catalyst_id": "c8", "target_id": "t1", "fallout_ids": ["f3", "f11"] },
+    { "catalyst_id": "c9", "target_id": "t6", "fallout_ids": ["f7", "f1"] },
+    { "catalyst_id": "c10", "target_id": "t4", "fallout_ids": ["f5", "f1"] }
+  ]
+}
