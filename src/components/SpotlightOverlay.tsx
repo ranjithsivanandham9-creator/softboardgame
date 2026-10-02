@@ -99,17 +99,16 @@ export function SpotlightOverlay({ features, currentStep, onNext, onSkip, onClos
 
   // Pointer event handling: block outside hole unless requireAction
   useEffect(() => {
-    const handlePointerDown = (e: React.PointerEvent) => {
+    const handlePointerDown = (e: PointerEvent) => {
       const feature = features[currentStep]
-      // If step doesn't require action, block pointer events outside the element
-      if (!feature.requireAction) {
-        const element = document.querySelector(feature.element)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          const isInside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom
-          if (!isInside) {
-            e.stopPropagation()
-          }
+      if (!feature || feature.requireAction) return
+
+      const element = document.querySelector(feature.element)
+      if (element) {
+        const rect = element.getBoundingClientRect()
+        const isInside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom
+        if (!isInside) {
+          e.stopPropagation()
         }
       }
     }
@@ -133,7 +132,7 @@ export function SpotlightOverlay({ features, currentStep, onNext, onSkip, onClos
       <div className="absolute inset-0 pointer-events-auto" style={{
         // SVG mask for the cut-out rounded rectangle
         // The mask creates a hole effect
-        '-webkit-mask': `inset(${8}px ${8}px ${8}px ${8}px)`,
+        WebkitMask: `inset(${8}px ${8}px ${8}px ${8}px)`,
         mask: `inset(${8}px ${8}px ${8}px ${8}px)`,
         borderRadius: 'var(--r-lg)',
       }} />
@@ -144,11 +143,11 @@ export function SpotlightOverlay({ features, currentStep, onNext, onSkip, onClos
           className="absolute inset-0 select-none"
           style={{
             // Position the cut-out based on computed styles
-            '--hole-left': computedStyles.left,
-            '--hole-top': computedStyles.top,
-            '--hole-width': computedStyles.width,
-            '--hole-height': computedStyles.height,
-            '--border-radius': computedStyles.borderRadius,
+            ['--hole-left' as any]: computedStyles.left,
+            ['--hole-top' as any]: computedStyles.top,
+            ['--hole-width' as any]: computedStyles.width,
+            ['--hole-height' as any]: computedStyles.height,
+            ['--border-radius' as any]: computedStyles.borderRadius,
             // Animated glide effect would be driven by CSS/JS
           }}
         />
@@ -165,19 +164,17 @@ export function SpotlightOverlay({ features, currentStep, onNext, onSkip, onClos
 }
 
 // Storybook stories
-if (typeof window !== 'undefined' && window.__STORYBOOK__) {
-  export function SpotlightOverlayStory() {
-    return (
-      <SpotlightOverlay
-        features={[
-          { id: 'feature-1', element: '[data-t=create]' },
-          { id: 'feature-2', element: '[data-t=join]' },
-        ]}
-        currentStep={0}
-        onNext={() => console.log('Next step')}
-        onSkip={() => console.log('Skipped')}
-        onClose={() => console.log('Closed')}
-      />
-    )
-  }
+export function SpotlightOverlayStory() {
+  return (
+    <SpotlightOverlay
+      features={[
+        { id: 'feature-1', element: '[data-t=create]' },
+        { id: 'feature-2', element: '[data-t=join]' },
+      ]}
+      currentStep={0}
+      onNext={() => console.log('Next step')}
+      onSkip={() => console.log('Skipped')}
+      onClose={() => console.log('Closed')}
+    />
+  )
 }

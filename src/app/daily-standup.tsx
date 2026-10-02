@@ -21,7 +21,18 @@ export interface DailyState {
   milestone: '3d' | '7d' | '30d' | '100d' | null
 }
 
+const getStoredNumber = (key: string, fallback = 0) => {
+  if (typeof window === 'undefined') return fallback
+
+  const value = window.localStorage.getItem(key)
+  const parsed = Number.parseInt(value ?? String(fallback), 10)
+  return Number.isFinite(parsed) ? parsed : fallback
+}
+
 export function DailyStandup() {
+  const initialStreak = getStoredNumber('daily_streak', 0)
+  const initialPto = getStoredNumber('daily_pto_tokens', 0)
+
   const [state, setState] = useState<DailyState>({
     date: new Date().toISOString().split('T')[0],
     turn: 1,
@@ -29,8 +40,8 @@ export function DailyStandup() {
     managerBot: true,
     score: 0,
     percentile: 0,
-    streak: parseInt(localStorage.getItem('daily_streak') || '0'),
-    ptoTokens: parseInt(localStorage.getItem('daily_pto_tokens') || '0'),
+    streak: initialStreak,
+    ptoTokens: initialPto,
     milestone: null
   })
 
@@ -79,8 +90,9 @@ export function DailyStandup() {
     if (streak % 7 === 0 && streak > 0) {
       const newPTO = Math.min(state.ptoTokens + 1, 2)
       setState(prev => ({ ...prev, ptoTokens: newPTO }))
-      // Save to localStorage
-      localStorage.setItem('daily_pto_tokens', String(newPTO))
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('daily_pto_tokens', String(newPTO))
+      }
     }
   }, [state.streak])
 
@@ -94,8 +106,8 @@ export function DailyStandup() {
     else if (streak >= 7) milestone = '7d'
     else if (streak >= 3) milestone = '3d'
     
-    if (state.milestone !== milestone) {
-      localStorage.setItem('daily_milestone', String(milestone || ''))
+    if (state.milestone !== milestone && typeof window !== 'undefined') {
+      window.localStorage.setItem('daily_milestone', String(milestone || ''))
     }
     setState(prev => ({ ...prev, milestone }))
   }, [state.streak])
@@ -143,9 +155,7 @@ export function DailyStandup() {
                 style={{ width: `${(state.turn / 12) * 100}%` }}
               />
             </div>
-            <p className="text-xs text-[var(--muted)] mt-1">
-              {state.turn}/12 turns
-            </div>
+            <p className="text-xs text-[var(--muted)] mt-1">{state.turn}/12 turns</p>
           </div>
 
           {/* PTO and milestone */}
@@ -165,7 +175,7 @@ export function DailyStandup() {
               </p>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   )

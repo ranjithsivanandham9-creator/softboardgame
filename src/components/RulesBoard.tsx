@@ -1,8 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { Display, h2 } from '@/components/Typography'
-import { Body } from '@/components/Typography'
 import { Avatar } from '@/components/Avatar'
 
 export type RulesTab = 'goal' | 'turns' | 'economy' | 'squares' | 'layoff' | 'winning'
@@ -40,9 +38,10 @@ export function RulesBoard({ isOpen, onOpenChange }: RulesBoardProps) {
         <div className="px-6 py-4 border-b border-[var(--line)]">
           <h2 className="text-h2 font-medium text-[var(--text)]">Rules</h2>
           <button
-            onClick={onOpenChange}
+            onClick={() => onOpenChange(false)}
             className="absolute right-2 text-[var(--muted)] hover:text-[var(--text)]"
             aria-label="Close rules board"
+            type="button"
           >
             ✕
           </button>

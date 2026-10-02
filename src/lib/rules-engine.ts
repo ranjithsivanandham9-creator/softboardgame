@@ -29,11 +29,13 @@ export interface RoomState {
   id: string
   seed: string
   players: PlayerState[]
+  path: number[]
   turn: number
   timer: number
   matchEnded: boolean
   winner: PlayerId | null
   victoryCondition: 'corner-office' | 'valuation' | 'last-man-standing'
+  layoffWave: number
   events: EventLog[]
 }
 
@@ -52,6 +54,8 @@ export interface EventLogEntry {
   details: string
   timestamp: number
 }
+
+export type EventLog = EventLogEntry
 
 export interface CreateRoomResult {
   roomId: string
@@ -140,7 +144,7 @@ export function applyIntent(
   intent: string,
   playerId: PlayerId
 ): RoomState {
-  const newState = { ...state }
+  let newState = { ...state }
 
   switch (intent) {
     case 'SPIN':
@@ -179,97 +183,109 @@ export function applyIntent(
 
 // Spin the wheel and determine result
 function applySpin(state: RoomState, playerId: PlayerId): RoomState {
-  // Weighted random selection based on wheel weights
+  const nextState: RoomState = {
+    ...state,
+    players: state.players.map((player) => (player.id === playerId ? { ...player } : player)),
+    events: [...state.events],
+  }
+
   const random = Math.random() * TOTAL_WHEEL_WEIGHT
   let cumulative = 0
 
   for (const [result, weight] of Object.entries(WHEEL_WEIGHTS)) {
     cumulative += weight
     if (random <= cumulative) {
-      // Apply the result
-      const resultPoints: '1' | '2' | '3' | '5' | '8' = result as any
-      // Move player forward
-      state.players.forEach(p => {
-        if (p.id === playerId) {
-          p.position += parseInt(resultPoints)
-          // Check if they've reached or passed the Corner Office
-          if (p.position >= state.path.length - 1) {
-            p.position = state.path.length - 1 // Cap at center
-            newState.winner = playerId
-            newState.victoryCondition = 'corner-office'
-            newState.matchEnded = true
-          }
+      const resultPoints = result as '1' | '2' | '3' | '5' | '8'
+      nextState.players = nextState.players.map((player) => {
+        if (player.id !== playerId) return player
+
+        const nextPosition = player.position + Number(resultPoints)
+        const cappedPosition = Math.min(nextPosition, nextState.path.length - 1)
+
+        if (cappedPosition >= nextState.path.length - 1) {
+          nextState.winner = playerId
+          nextState.victoryCondition = 'corner-office'
+          nextState.matchEnded = true
         }
+
+        return { ...player, position: cappedPosition }
       })
       break
     }
   }
 
-  return newState
+  nextState.events.push({
+    type: 'SPIN',
+    player: playerId,
+    details: 'Wheel spin resolved',
+    timestamp: Date.now(),
+  })
+
+  return nextState
 }
 
 // Buy a repository
 function applyBuy(state: RoomState, playerId: PlayerId): RoomState {
-  const player = state.players.find(p => p.id === playerId)
-  if (!player || player.rsu < ECONOMY.repoPriceBase) return state
+  const nextState: RoomState = { ...state, players: state.players.map((player) => ({ ...player, upgradedRepos: new Set(player.upgradedRepos) })), events: [...state.events] }
+  const player = nextState.players.find((p) => p.id === playerId)
+  if (!player || player.rsu < ECONOMY.repoPriceBase) return nextState
 
-  // Price depends on position (outer ring = 100, inner = 300)
-  const priceTier = Math.min(Math.floor(player.position / (state.path.length / 5)), 4) + 1
+  const priceTier = Math.min(Math.floor(player.position / (nextState.path.length / 5)), 4) + 1
   const price = ECONOMY.repoPriceBase + (priceTier - 1) * ECONOMY.repoPriceIncrement
 
-  if (player.rsu < price) return state // Not enough RSUs
+  if (player.rsu < price) return nextState
 
-  // Apply purchase
   player.rsu -= price
   player.repoCount++
-  player.upgradedRepos.add(player.position) // Mark as potentially upgradable
+  player.upgradedRepos.add(player.position)
 
-  // Tech debt fee
   const techDebt = Math.round(price * (ECONOMY.techDebtFeePercent / 100))
-  player.rsu += techDebt // Tech debt fee goes to... actually per PRD it's paid TO the owner
+  player.rsu += techDebt
 
-  return newState
+  nextState.events.push({ type: 'BUY', player: playerId, details: `Bought repo at ${player.position}`, timestamp: Date.now() })
+  return nextState
 }
 
 // Pass turn
 function applyPass(state: RoomState, playerId: PlayerId): RoomState {
-  // Simple pass - just advance turn
-  state.turn = (state.turn % state.players.length) + 1
-  return newState
+  const nextState: RoomState = { ...state, events: [...state.events] }
+  nextState.turn = (nextState.turn % nextState.players.length) + 1
+  nextState.events.push({ type: 'PASS', player: playerId, details: 'Passed turn', timestamp: Date.now() })
+  return nextState
 }
 
 // Acknowledge incident/modal
 function applyAck(state: RoomState, playerId: PlayerId): RoomState {
-  // Just acknowledge - no state change beyond event log
-  return newState
+  const nextState: RoomState = { ...state, events: [...state.events] }
+  nextState.events.push({ type: 'ACK', player: playerId, details: 'Acknowledged', timestamp: Date.now() })
+  return nextState
 }
 
 // Start the match
 function applyStart(state: RoomState): RoomState {
-  state.matchEnded = false
-  state.winner = null
-  // Reset positions to start
-  state.players.forEach(p => {
-    p.position = 0
-  })
-  return newState
+  const nextState: RoomState = { ...state, events: [...state.events] }
+  nextState.matchEnded = false
+  nextState.winner = null
+  nextState.players = nextState.players.map((player) => ({ ...player, position: 0 }))
+  nextState.events.push({ type: 'START', player: null, details: 'Match started', timestamp: Date.now() })
+  return nextState
 }
 
 // Pick avatar (first-write-wins)
 function applyPickAvatar(state: RoomState, playerId: PlayerId): RoomState {
-  // Check if any player has already picked an avatar
-  const alreadyPicked = state.players.some(p => p.id !== playerId && p.status === 'active')
-  
+  const nextState: RoomState = { ...state, players: state.players.map((player) => ({ ...player, upgradedRepos: new Set(player.upgradedRepos) })), events: [...state.events] }
+
+  const alreadyPicked = nextState.players.some((p) => p.id !== playerId && p.status === 'active')
+
   if (alreadyPicked) {
-    // This player joins late - become spectator or get assigned random avatar
-    // For now, just mark as active with a note
-    const player = state.players.find(p => p.id === playerId)
+    const player = nextState.players.find((p) => p.id === playerId)
     if (player) {
       player.status = 'active'
     }
   }
 
-  return newState
+  nextState.events.push({ type: 'PICK_AVATAR', player: playerId, details: 'Avatar selected', timestamp: Date.now() })
+  return nextState
 }
 
 // Create a new room
@@ -282,14 +298,14 @@ export function createRoom(settings: GameSettings, seed: string): CreateRoomResu
   // Initialize players
   const playerCount = settings.playerCount
   const players: PlayerState[] = []
+  const playerPool: PlayerId[] = ['dev', 'intern', 'vp', 'leet', 'pm', 'pe']
 
-  // Add bot if solo
   const actualPlayerCount = playerCount === 1 ? 1 : playerCount
 
   for (let i = 0; i < actualPlayerCount; i++) {
-    const playerId = i === 0 ? 'dev' : `dev_${i}` // Simplified: use dev as first player
+    const playerId = playerPool[i % playerPool.length]
     players.push({
-      id: playerId as PlayerId,
+      id: playerId,
       rsu: ECONOMY.startingRSUs,
       position: 0,
       status: 'active',
@@ -298,21 +314,8 @@ export function createRoom(settings: GameSettings, seed: string): CreateRoomResu
     })
   }
 
-  // Add bot players if needed
-  for (let i = actualPlayerCount; i < playerCount; i++) {
-    // Manager Bot
-    players.push({
-      id: 'bot' as PlayerId,
-      rsu: 0,
-      position: 0,
-      status: 'active',
-      repoCount: 0,
-      upgradedRepos: new Set()
-    })
-  }
-
   // Generate board
-  const boardInfo = generateSpiralPath(7) // Default to 7x7 for testing
+  const boardInfo = generateSpiralPath(7)
   const grid: any[] = []
   for (let i = 0; i < boardInfo.path.length; i++) {
     grid.push({
@@ -328,17 +331,20 @@ export function createRoom(settings: GameSettings, seed: string): CreateRoomResu
     id: roomId,
     seed,
     players,
+    path: boardInfo.path,
     turn: 1,
     timer: settings.turnTimer === '10' ? 10 : settings.turnTimer === '12' ? 12 : 15,
     matchEnded: false,
     winner: null,
     victoryCondition: 'corner-office',
+    layoffWave: 0,
     events: []
   }
 
   return {
     roomId,
     code,
+    seed,
     initialState
   }
 }
@@ -422,8 +428,8 @@ function determineMatchDuration(state: RoomState): number {
 // Property tests for the rules engine
 export function testDeterminism() {
   // Test that createRoom produces consistent results for same seed
-  const result1 = createRoom({ playerCount: 2, matchDuration: '10' }, 'test-seed-1')
-  const result2 = createRoom({ playerCount: 2, matchDuration: '10' }, 'test-seed-1')
+  const result1 = createRoom({ playerCount: 2, matchDuration: '10', turnTimer: '10' }, 'test-seed-1')
+  const result2 = createRoom({ playerCount: 2, matchDuration: '10', turnTimer: '10' }, 'test-seed-1')
 
   // Room IDs should be different (based on hash), but structure should be consistent
   if (result1.initialState.players.length !== result2.initialState.players.length) {
@@ -435,19 +441,16 @@ export function testDeterminism() {
   }
 
   // Test that wheel weights are correct
-  const { WHEEL_WEIGHTS, TOTAL_WHEEL_WEIGHT } = (() => {
-    let cumulative = 0
-    const weights: Record<string, number> = {}
-    for (const [result, weight] of Object.entries(WHEEL_WEIGHTS)) {
-      cumulative += weight
-      weights[result] = cumulative
-    }
-    return { WHEEL_WEIGHTS, TOTAL_WHEEL_WEIGHT: cumulative }
-  })()
+  let cumulative = 0
+  const weights: Record<string, number> = {}
+  for (const [result, weight] of Object.entries(WHEEL_WEIGHTS)) {
+    cumulative += weight
+    weights[result] = cumulative
+  }
 
   // All weights should be positive and total should be 100
-  if (TOTAL_WHEEL_WEIGHT !== 100) {
-    throw new Error(`Wheel weights total should be 100, got ${TOTAL_WHEEL_WEIGHT}`)
+  if (cumulative !== 100) {
+    throw new Error(`Wheel weights total should be 100, got ${cumulative}`)
   }
 
   for (const weight of Object.values(WHEEL_WEIGHTS)) {
@@ -459,12 +462,3 @@ export function testDeterminism() {
   console.log('All rules engine property tests passed')
 }
 
-// Export types for use in other modules
-export type { 
-  GameSettings, 
-  RoomState, 
-  PlayerState, 
-  EventLogEntry, 
-  WheelResult, 
-  Economy 
-}

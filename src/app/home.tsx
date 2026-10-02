@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { Display, Label, Body, Button } from '@/components/Typography'
+import { Display, Label, Body } from '@/components/Typography'
 import { Avatar } from '@/components/Avatar'
 import { Button as AppButton } from '@/components/Button'
 import { SegmentedControl } from '@/components/SegmentedControl'
@@ -61,13 +61,13 @@ export default function HomePage() {
         <div className="flex items-center gap-2">
           <AppButton variant="ghost" size="icon" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
             {theme === 'dark' ? '☀️' : '🌙'}
-          </Button>
+          </AppButton>
           <AppButton variant="ghost" size="icon" aria-label="Sound toggle">
             🔊
-          </Button>
+          </AppButton>
           <AppButton variant="ghost" size="icon" aria-label="Help">
             ?
-          </Button>
+          </AppButton>
         </div>
       </header>
 
@@ -110,7 +110,7 @@ export default function HomePage() {
             <a href="#tutorials" className="text-body hover:text-[var(--text)] transition-colors">Replay Tutorials</a>
             <a href="#privacy" className="text-body hover:text-[var(--text)] transition-colors">Privacy</a>
           </nav>
-          <p className="text-caption text-[var(--muted)">No accounts. No tracking. Just vibes.</p>
+          <p className="text-caption text-[var(--muted)]">No accounts. No tracking. Just vibes.</p>
         </footer>
       </main>
 

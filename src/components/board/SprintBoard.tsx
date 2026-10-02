@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Avatar } from '@/components/Avatar'
+import { Avatar, type AvatarId } from '@/components/Avatar'
 import { Display, Stat, Body } from '@/components/Typography'
 import { Button } from '@/components/Button'
 import { VelocityWheel } from '@/components/VelocityWheel'
@@ -41,12 +41,8 @@ export default function SprintBoard({ state }: { state: BoardState }) {
     
     // Small avatar disc for owner
     let ownerDisplay = null
-    if (tile.owner && !reducedMotion) {
-      const color = {
-        dev: '#3B2F5E', intern: '#12483B', vp: '#42324F',
-        leet: '#4A2530', pm: '#3E3A1E', pe: '#173B4D'
-      }[tile.owner]
-      ownerDisplay = <Avatar id={tile.owner} size={24} />
+    if (tile.owner && tile.owner !== 'bank' && !reducedMotion) {
+      ownerDisplay = <Avatar id={tile.owner as AvatarId} size={24} />
     }
 
     return (
@@ -90,7 +86,7 @@ export default function SprintBoard({ state }: { state: BoardState }) {
     <div className="p-4 bg-[var(--surface-2)] rounded-[var(--r-md)] mt-4">
       <div className="text-caption text-[var(--muted)] mb-2">Velocity Wheel</div>
       <VelocityWheel
-        result={state.diceResult}
+        result={state.diceResult ?? null}
         isLocalTurn={true}
         onSpin={() => console.log('Spin')}
         disabled={false}
@@ -101,9 +97,9 @@ export default function SprintBoard({ state }: { state: BoardState }) {
       <p className="text-[var(--muted)] text-xs">Event 3: Layoff wave</p>
       <p className="text-[var(--muted)] text-xs">Event 4: PIP trap triggered</p>
       <p className="text-[var(--muted)] text-xs">Event 5: Corner Office reached</p>
-      <div className="mt-2">
-        <Button variant="poke" size="sm">Poke</Button>
-        <Button variant="help" size="sm">Help</Button>
+      <div className="mt-2 flex gap-2">
+        <Button variant="primary" size="sm">Poke</Button>
+        <Button variant="secondary" size="sm">Help</Button>
       </div>
     </div>
   )

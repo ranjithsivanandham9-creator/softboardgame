@@ -6,9 +6,22 @@ import * as React from 'react'
 const STORAGE_KEY = 'tut.v1'
 const DISABLED_KEY = 'tut.disabled'
 
+type TutorialStatus = 'seen' | 'skipped'
+
+export type TutorialFeature = {
+  id: string
+  title?: string
+  trigger: string
+  steps: {
+    element: string
+    text: string
+    requireAction?: boolean
+  }[]
+}
+
 // Get persisted state
 const getPersistedState = (): {
-  seen: Record<string, 'seen' | 'skipped'>
+  seen: Record<string, TutorialStatus>
   disabled: boolean
 } => {
   try {
@@ -21,7 +34,7 @@ const getPersistedState = (): {
 }
 
 // Save state
-const saveState = (state: { seen: Record<string, 'seen' | 'skipped'>; disabled: boolean }) => {
+const saveState = (state: { seen: Record<string, TutorialStatus>; disabled: boolean }) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.seen))
     localStorage.setItem(DISABLED_KEY, String(state.disabled))
@@ -34,31 +47,32 @@ const saveState = (state: { seen: Record<string, 'seen' | 'skipped'>; disabled: 
 export const shouldFireFeature = (
   featureId: string,
   force = false
-): { fire: boolean; seen: 'seen' | 'skipped'; disabled: boolean } => {
+): { fire: boolean; seen: TutorialStatus; disabled: boolean } => {
   const { seen, disabled } = getPersistedState()
+  const currentStatus = (seen[featureId] ?? 'skipped') as TutorialStatus
 
   if (disabled && !force) {
-    return { fire: false, seen, disabled }
+    return { fire: false, seen: currentStatus, disabled }
   }
 
   if (force) {
     // force:true ignores both without changing them
-    return { fire: true, seen, disabled }
+    return { fire: true, seen: currentStatus, disabled }
   }
 
   const alreadySeen = seen[featureId]
   if (alreadySeen === 'seen') {
-    return { fire: false, seen, disabled }
+    return { fire: false, seen: currentStatus, disabled }
   }
 
   if (alreadySeen === 'skipped') {
-    return { fire: false, seen, disabled }
+    return { fire: false, seen: currentStatus, disabled }
   }
 
   // First encounter - mark as seen
-  const newSeen = { ...seen, [featureId]: 'seen' }
+  const newSeen = { ...seen, [featureId]: 'seen' as TutorialStatus }
   saveState({ seen: newSeen, disabled })
-  return { fire: true, seen: newSeen[featureId], disabled }
+  return { fire: true, seen: 'seen', disabled }
 }
 
 // Persistence toggle
@@ -72,21 +86,21 @@ export function useTutorialEngine(features: Record<string, TutorialFeature>) {
   const [state, setState] = React.useState(() => getPersistedState())
 
   const startTutorial = React.useCallback((featureId: string, opts?: { force?: boolean }) => {
-    const { fire, seen, disabled } = shouldFireFeature(featureId, opts?.force)
+    const { fire, disabled } = shouldFireFeature(featureId, opts?.force)
 
     if (!fire) return
 
     const feature = features[featureId]
     if (!feature) return
 
-    // Mark as seen
-    const newSeen = { ...seen, [featureId]: 'seen' }
-    saveState({ seen: newSeen, disabled: state.disabled })
+    const { seen } = getPersistedState()
+    const newSeen = { ...seen, [featureId]: 'seen' as TutorialStatus }
+    saveState({ seen: newSeen, disabled })
   }, [features])
 
   const skipFeature = React.useCallback((featureId: string) => {
     const { seen, disabled } = getPersistedState()
-    const newSeen = { ...seen, [featureId]: 'skipped' }
+    const newSeen: Record<string, TutorialStatus> = { ...seen, [featureId]: 'skipped' }
     saveState({ seen: newSeen, disabled })
   }, [])
 
@@ -200,6 +214,3 @@ export const tutorialFeatures = {
     ],
   },
 }
-
-// Export types
-export type { TutorialFeature }

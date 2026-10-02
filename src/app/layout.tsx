@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Geist_Mono } from 'next/font/google'
-import './styles/globals.css'
-import './styles/fonts.css'
+import { Inter, JetBrains_Mono } from 'next/font/google'
+import '../styles/globals.css'
+import '../styles/fonts.css'
 import { FontPreload } from '@/components/FontPreload'
 
 const inter = Inter({
@@ -12,7 +12,7 @@ const inter = Inter({
   fallback: ['SF Pro Display', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
 })
 
-const geistMono = Geist_Mono({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
   display: 'swap',
@@ -46,7 +46,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#09090B" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </head>
-      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}>
         <FontPreload />
         <a href="#main" className="skip-link">
           Skip to main content

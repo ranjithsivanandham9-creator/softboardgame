@@ -148,7 +148,7 @@ export default function LobbyPage({ initialState }: { initialState: LobbyState }
 
           {/* (e) Always-visible mono rules note */}
           <div className="mt-6 p-4 rounded-[var(--r-md)] bg-[var(--surface-2)] text-[var(--muted)] text-sm">
-            <Strong>First to the Corner Office wins instantly.</Strong> If the clock hits zero, highest valuation wins.
+            <BodyStrong as="span">First to the Corner Office wins instantly.</BodyStrong> If the clock hits zero, highest valuation wins.
           </div>
 
           {/* (f) Character select */}
@@ -163,11 +163,11 @@ export default function LobbyPage({ initialState }: { initialState: LobbyState }
                   style={{ cursor: 'pointer' }}
                   onPointerEnter={(e) => {
                     // Lift effect on hover
-                    const avatar = e.currentTarget as HTMLElement
+                    const avatar = e.currentTarget as SVGSVGElement
                     avatar.style.transform = 'translateY(-4px)'
                   }}
                   onPointerLeave={(e) => {
-                    const avatar = e.currentTarget as HTMLElement
+                    const avatar = e.currentTarget as SVGSVGElement
                     avatar.style.transform = 'translateY(0)'
                   }}
                 />
@@ -200,7 +200,7 @@ export default function LobbyPage({ initialState }: { initialState: LobbyState }
               variant="secondary"
               size="lg"
               data-t="invite"
-              onClick={}
+              onClick={() => {}}
               className="flex-1"
             >
               Copy Invite Link

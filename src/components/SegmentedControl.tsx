@@ -157,7 +157,7 @@ export function SegmentedControl({
           onClick={() => item.disabled ? null : handleItemClick(item.value)}
           disabled={item.disabled}
           aria-disabled={item.disabled}
-          style={{ '--layout-id': layoutId }}
+          style={{ ['--layout-id' as any]: layoutId }}
         >
           {item.label}
         </button>
@@ -170,8 +170,8 @@ export function SegmentedControl({
           !isPressed && 'scale-100'
         )}
         style={{
-          '--highlight-position': `${highlightPosition}%`,
-          '--highlight-size': `${highlightSize}%`,
+          ['--highlight-position' as any]: `${highlightPosition}%`,
+          ['--highlight-size' as any]: `${highlightSize}%`,
         }}
       />
     </div>
@@ -179,61 +179,59 @@ export function SegmentedControl({
 }
 
 // Storybook stories
-if (typeof window !== 'undefined' && window.__STORYBOOK__) {
-  export const Default = () => {
-    const [value, setValue] = React.useState('1')
-    return (
-      <SegmentedControl
-        items={[
-          { value: '1', label: '1' },
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-          { value: '4', label: '4' },
-          { value: '5', label: '5' },
-          { value: '6', label: '6' },
-        ]}
-        value={value}
-        onValueChange={setValue}
-        layoutId="players-control"
-      />
-    )
-  }
+export const Default = () => {
+  const [value, setValue] = React.useState('1')
+  return (
+    <SegmentedControl
+      items={[
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '5', label: '5' },
+        { value: '6', label: '6' },
+      ]}
+      value={value}
+      onValueChange={setValue}
+      layoutId="players-control"
+    />
+  )
+}
 
-  export const WithNeon = () => {
-    const [value, setValue] = React.useState('3')
-    return (
-      <SegmentedControl
-        items={[
-          { value: '1', label: '1' },
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-          { value: '4', label: '4' },
-          { value: '5', label: '5' },
-          { value: '6', label: '6' },
-        ]}
-        value={value}
-        onValueChange={setValue}
-        variant="neon"
-        layoutId="neon-players"
-      />
-    )
-  }
+export const WithNeon = () => {
+  const [value, setValue] = React.useState('3')
+  return (
+    <SegmentedControl
+      items={[
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '5', label: '5' },
+        { value: '6', label: '6' },
+      ]}
+      value={value}
+      onValueChange={setValue}
+      variant="neon"
+      layoutId="neon-players"
+    />
+  )
+}
 
-  export const DisabledItems = () => {
-    const [value, setValue] = React.useState('3')
-    return (
-      <SegmentedControl
-        items={[
-          { value: '1', label: '1' },
-          { value: '2', label: '2', disabled: true },
-          { value: '3', label: '3' },
-          { value: '4', label: '4', disabled: true },
-          { value: '5', label: '5' },
-          { value: '6', label: '6' },
-        ]}
-        value={value}
-        onValueChange={setValue}
-      />
-    )
-  }
+export const DisabledItems = () => {
+  const [value, setValue] = React.useState('3')
+  return (
+    <SegmentedControl
+      items={[
+        { value: '1', label: '1' },
+        { value: '2', label: '2', disabled: true },
+        { value: '3', label: '3' },
+        { value: '4', label: '4', disabled: true },
+        { value: '5', label: '5' },
+        { value: '6', label: '6' },
+      ]}
+      value={value}
+      onValueChange={setValue}
+    />
+  )
 }

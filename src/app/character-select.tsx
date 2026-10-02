@@ -3,7 +3,8 @@
 import * as React from 'react'
 import { Avatar } from '@/components/Avatar'
 import { Button } from '@/components/Button'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { cn } from '@/lib/utils'
+import { useState, useEffect, useRef } from 'react'
 
 export type AvatarId = 'dev' | 'intern' | 'vp' | 'leet' | 'pm' | 'pe'
 
@@ -72,7 +73,7 @@ export function CharacterSelect({ onSelect }: { onSelect: (id: AvatarId) => void
 
   // Pointer tracking for face rig
   useEffect(() => {
-    const handlePointerMove = (e: React.PointerEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       setPointerPos({ x: e.clientX, y: e.clientY })
     }
     window.addEventListener('pointermove', handlePointerMove)
@@ -105,11 +106,11 @@ export function CharacterSelect({ onSelect }: { onSelect: (id: AvatarId) => void
   }
 
   // Handle thumbnail click/selection
-  const handleThumbnailClick = useCallback((id: AvatarId) => {
+  const handleThumbnailClick = (id: AvatarId) => {
     // Check if already claimed
     if (claimedState[id].claimed) {
       // Tiny shake on tap for claimed avatars
-      const avatarEl = document.querySelector(`#avatar-${id}`)
+      const avatarEl = document.querySelector(`#avatar-${id}`) as HTMLElement | null
       if (avatarEl) {
         avatarEl.style.transform = 'translateX(-4px) scale(0.95)'
         setTimeout(() => {
@@ -118,41 +119,45 @@ export function CharacterSelect({ onSelect }: { onSelect: (id: AvatarId) => void
       }
       return
     }
-    
+
     // Select avatar (first-write-wins)
     setSelectedId(id)
     triggerConfetti(id)
     onSelect(id)
-  })
+  }
 
   // Avatar selection behavior
-  const avatarOnPointerMove = useCallback((id: AvatarId, e: React.PointerEvent) => {
-    const avatarEl = document.querySelector(`#avatar-${id}`)
+  const avatarOnPointerMove = (id: AvatarId, e: React.PointerEvent) => {
+    const avatarEl = document.querySelector(`#avatar-${id}`) as HTMLElement | null
     if (!avatarEl) return
-    
+
     // Lift thumbnail
     avatarEl.style.transform = 'translateY(-4px) scale(1.05)'
-    
+
     // Face looks at cursor
     const rect = avatarEl.getBoundingClientRect()
     const cursorX = e.clientX - rect.left - rect.width / 2
     const cursorY = e.clientY - rect.top - rect.height / 2
-    
+
     // Max 3px x, 2px y movement
     const moveX = Math.max(-3, Math.min(3, cursorX / 50))
     const moveY = Math.max(-2, Math.min(2, cursorY / 50))
-    
-    avatarEl.style.transform = `translateY(-4px) scale(1.05) translate(${moveX}px, ${moveY}px)`
-  }, [])
 
-  const avatarOnPointerLeave = useCallback((id: AvatarId) => {
-    const avatarEl = document.querySelector(`#avatar-${id}`)
+    avatarEl.style.transform = `translateY(-4px) scale(1.05) translate(${moveX}px, ${moveY}px)`
+  }
+
+  const avatarOnPointerLeave = (id: AvatarId) => {
+    const avatarEl = document.querySelector(`#avatar-${id}`) as HTMLElement | null
     if (!avatarEl) return
     avatarEl.style.transform = ''
-  }, [])
+  }
 
   // Check if avatar is claimed
   const isClaimed = (id: AvatarId) => claimedState[id].claimed
+  const freeAvatars = avatars.filter(id => !isClaimed(id))
+  const previewId = freeAvatars[0] || avatars[0]
+  const previewName = avatarNames[previewId]
+  const previewTag = avatarTags[previewId]
 
   // All six must fit in one row on 360px screen - they will, they're 96x96 scaled down
 
@@ -164,13 +169,12 @@ export function CharacterSelect({ onSelect }: { onSelect: (id: AvatarId) => void
         <div className="text-center mb-8">
           {selectedId && claimedState[selectedId].claimed ? (
             <div className="relative">
-              <Avatar
-                id={selectedId}
-                emotion="idle"
-                size={280}
+              <div
                 style={{ transform: isClaimed(selectedId) ? 'scale(0.4) grayscale(40%)' : 'scale(1)' }}
                 aria-grabbed={isClaimed(selectedId)}
-              />
+              >
+                <Avatar id={selectedId} emotion="idle" size={280} />
+              </div>
               {isClaimed(selectedId) && (
                 <div className="absolute top-2 right-2 bg-[var(--bad)] text-[var(--bg)] text-xs rounded-[var(--r-sm)] px-2 py-1">
                   Locked
@@ -194,12 +198,6 @@ export function CharacterSelect({ onSelect }: { onSelect: (id: AvatarId) => void
             <div>
               {/* Avatar preview - centered */}
               <div className="relative mx-auto mb-6">
-                {/* Show first available unclaimed avatar as preview */}
-                const freeAvatars = avatars.filter(id => !isClaimed(id))
-                const previewId = freeAvatars[0] || avatars[0]
-                const previewName = avatarNames[previewId]
-                const previewTag = avatarTags[previewId]
-                
                 <Avatar
                   id={previewId}
                   emotion="idle"
@@ -241,13 +239,9 @@ export function CharacterSelect({ onSelect }: { onSelect: (id: AvatarId) => void
                   onPointerLeave={() => avatarOnPointerLeave(id)}
                   onPointerDown={() => handleThumbnailClick(id)}
                 >
-                  <Avatar
-                    id={id}
-                    emotion="idle"
-                    size={64}
-                    speaking={false}
-                    style={{ transform: isSelected ? 'scale(1.1)' : 'scale(1)' }}
-                  />
+                  <div style={{ transform: isSelected ? 'scale(1.1)' : 'scale(1)' }}>
+                    <Avatar id={id} emotion="idle" size={64} speaking={false} />
+                  </div>
                   <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-caption text-[var(--muted)] text-xs">
                     {name}
                   </div>
@@ -287,33 +281,28 @@ export function CharacterSelect({ onSelect }: { onSelect: (id: AvatarId) => void
 }
 
 // Storybook stories
-if (typeof window !== 'undefined' && window.__STORYBOOK__) {
-  export const CharacterSelectStory = () => {
-    const [selected, setSelected] = React.useState<AvatarId | null>(null)
-    return (
-      <CharacterSelect onSelect={setSelected} />
-    )
+export const CharacterSelectStory = () => {
+  const [selected, setSelected] = React.useState<AvatarId | null>(null)
+  return <CharacterSelect onSelect={setSelected} />
+}
+
+export const WithSelections = () => {
+  const [selected, setSelected] = React.useState<AvatarId | null>(null)
+  const claimedMock = {
+    dev: { claimed: true, claimer: 'CoffeeBadger' },
+    intern: { claimed: false },
+    vp: { claimed: false },
+    leet: { claimed: false },
+    pm: { claimed: false },
+    pe: { claimed: false },
   }
 
-  export const WithSelections = () => {
-    const [selected, setSelected] = React.useState<AvatarId | null>(null)
-    const claimedMock = {
-      dev: { claimed: true, claimer: 'CoffeeBadger' },
-      intern: { claimed: false },
-      vp: { claimed: false },
-      leet: { claimed: false },
-      pm: { claimed: false },
-      pe: { claimed: false },
-    }
-    
-    // Override claimed state for story
-    ;(claimedState as any).dev = claimedMock.dev
-    ;(claimedState as any).intern = claimedMock.intern
-    ;(claimedState as any).vp = claimedMock.vp
-    ;(claimedState as any).leet = claimedMock.leet
-    ;(claimedState as any).pm = claimedMock.pm
-    ;(claimedState as any).pe = claimedMock.pe
-    
-    return <CharacterSelect onSelect={setSelected} />
-  }
+  ;(claimedState as any).dev = claimedMock.dev
+  ;(claimedState as any).intern = claimedMock.intern
+  ;(claimedState as any).vp = claimedMock.vp
+  ;(claimedState as any).leet = claimedMock.leet
+  ;(claimedState as any).pm = claimedMock.pm
+  ;(claimedState as any).pe = claimedMock.pe
+
+  return <CharacterSelect onSelect={setSelected} />
 }

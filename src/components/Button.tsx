@@ -13,6 +13,9 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   size?: ButtonSize
   magnetic?: boolean
   idempotentKey?: string
+  loading?: boolean
+  success?: boolean
+  error?: boolean
 }
 
 const motionDuration = {
@@ -39,12 +42,10 @@ export function Button({
   const [state, setState] = React.useState<'idle' | 'hover' | 'focus-visible' | 'pressed' | 'loading' | 'success' | 'error' | 'disabled'>('idle')
   const [isFocusVisible, setIsFocusVisible] = React.useState(false)
   const [internalDisabled, setInternalDisabled] = React.useState(false)
-  const hoverRef = React.useRef<HTMLDivElement>(null)
-  const pressedRef = React.useRef<HTMLDivElement>(null)
-  const idempotentTimeoutRef = React.useRef<NodeJS.Timeout | null>(null)
+  const idempotentTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Handle idempotency - debounce clicks
-  const handleIdempotentClick = React.useCallback((e: React.MouseEvent) => {
+  const handleIdempotentClick = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     if (idempotentKey && idempotentTimeoutRef.current) {
       clearTimeout(idempotentTimeoutRef.current)
     }
@@ -74,10 +75,6 @@ export function Button({
     if (internalDisabled) return
     setIsFocusVisible(false)
     setState('idle')
-  }
-
-  const handleFocusVisible = (e: React.FocusEvent) => {
-    setIsFocusVisible(true)
   }
 
   const handlePointerDown = () => {
@@ -144,7 +141,7 @@ export function Button({
   const reducedMotion = useReducedMotion()
 
   // Click handler
-  const handleClick = React.useCallback((e: React.MouseEvent) => {
+  const handleClick = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     if (internalDisabled) return
     if (reducedMotion && state === 'pressed') {
       // Skip animation in reduced motion
@@ -237,20 +234,6 @@ export function Button({
     className
   )
 
-  // Ripple effect
-  const rippleEffect = React.useMemo(() => {
-    if (state !== 'pressed' || !rippleRef.current) return null
-    return (
-      <div
-        className="absolute inset-0 rounded-full opacity-12 bg-white transform scale-0"
-        style={{
-          left: rippleRef.current.getBoundingClientRect().left - hoveredRef.current.getBoundingClientRect().left,
-          top: rippleRef.current.getBoundingClientRect().top - hoveredRef.current.getBoundingClientRect().top,
-        }}
-      />
-    )
-  }, [state])
-
   return (
     <button
       className={buttonClasses}
@@ -258,14 +241,12 @@ export function Button({
       onMouseLeave={handleMouseLeave}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      onFocusVisible={handleFocusVisible}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
       onClick={handleClick}
       disabled={isDisabled}
       type="button"
-      ref={props.ref}
       {...props}
     >
       {renderContent}
@@ -287,74 +268,72 @@ export function Button({
 }
 
 // Storybook stories
-if (typeof window !== 'undefined' && window.__STORYBOOK__) {
-  export const Primary = () => <Button variant="primary">Create Sprint</Button>
-  export const Secondary = () => <Button variant="secondary">Join Retro</Button>
-  export const Ghost = () => <Button variant="ghost">Cancel</Button>
-  export const Icon = () => <Button variant="icon" size="icon">
-    <svg
-      className="h-5 w-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M8 12l4 4 4-4" />
-    </svg>
+export const Primary = () => <Button variant="primary">Create Sprint</Button>
+export const Secondary = () => <Button variant="secondary">Join Retro</Button>
+export const Ghost = () => <Button variant="ghost">Cancel</Button>
+export const Icon = () => <Button variant="icon" size="icon">
+  <svg
+    className="h-5 w-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M8 12l4 4 4-4" />
+  </svg>
+</Button>
+export const Disabled = () => (
+  <Button variant="primary" disabled>
+    Waiting for players
   </Button>
-  export const Disabled = () => (
-    <Button variant="primary" disabled>
-      Waiting for players
+)
+export const Loading = () => {
+  const [loading, setLoading] = React.useState(true)
+  setTimeout(() => setLoading(false), 3000)
+  return <Button variant="primary" loading>{loading ? 'Creating...' : 'Create Sprint'}</Button>
+}
+export const Success = () => {
+  const [success, setSuccess] = React.useState(true)
+  const timeout = setTimeout(() => setSuccess(false), 1500)
+  return (
+    <Button variant="primary" onClick={() => setSuccess(false)} loading={success}>
+      Create Sprint
     </Button>
   )
-  export const Loading = () => {
-    const [loading, setLoading] = React.useState(true)
-    setTimeout(() => setLoading(false), 3000)
-    return <Button variant="primary" loading>{loading ? 'Creating...' : 'Create Sprint'}</Button>
-  }
-  export const Success = () => {
-    const [success, setSuccess] = React.useState(true)
-    const timeout = setTimeout(() => setSuccess(false), 1500)
-    return (
-      <Button variant="primary" onClick={() => setSuccess(false)} loading={success}>
-        Create Sprint
-      </Button>
-    )
-  }
-  export const Error = () => {
-    const [error, setError] = React.useState(true)
-    const timeout = setTimeout(() => setError(false), 1500)
-    return (
-      <Button variant="primary" onClick={() => setError(false)} loading={error} disabled>
-        Create Sprint
-      </Button>
-    )
-  }
-  export const Magnetic = () => <Button variant="primary" magnetic>Create Sprint</Button>
-  export const Idle = () => <Button variant="primary">Idle State</Button>
-  export const Hover = () => <Button variant="primary">Hover State</Button>
-  export const FocusVisible = () => (
-    <Button variant="primary" onFocusVisible={() => console.log('focus visible')}>Focus Visible</Button>
+}
+export const Error = () => {
+  const [error, setError] = React.useState(true)
+  const timeout = setTimeout(() => setError(false), 1500)
+  return (
+    <Button variant="primary" onClick={() => setError(false)} loading={error} disabled>
+      Create Sprint
+    </Button>
   )
-  export const Pressed = () => <Button variant="primary">Pressed</Button>
-  export const LabelSwap = () => {
-    const [copied, setCopied] = React.useState(false)
-    return (
-      <Button
-        variant="secondary"
-        onClick={() => setCopied(true)}
-        className={cn(className, 'data-[copied=true]:after:content-["Copied ✓"]')}
-      >
-        {copied ? 'Copied ✓' : 'Copy Invite Link'}
-      </Button>
-    )
-  }
+}
+export const Magnetic = () => <Button variant="primary" magnetic>Create Sprint</Button>
+export const Idle = () => <Button variant="primary">Idle State</Button>
+export const Hover = () => <Button variant="primary">Hover State</Button>
+export const FocusVisible = () => (
+  <Button variant="primary">Focus Visible</Button>
+)
+export const Pressed = () => <Button variant="primary">Pressed</Button>
+export const LabelSwap = () => {
+  const [copied, setCopied] = React.useState(false)
+  return (
+    <Button
+      variant="secondary"
+      onClick={() => setCopied(true)}
+      className={'data-[copied=true]:after:content-["Copied ✓"]'}
+    >
+      {copied ? 'Copied ✓' : 'Copy Invite Link'}
+    </Button>
+  )
 }
 
 // Type scale for button text
 export function useButtonTextScale(variant: ButtonVariant, size: ButtonSize) {
-  const scales = {
+  const scales: Record<ButtonVariant, Partial<Record<ButtonSize, string>>> = {
     primary: {
       sm: '14px/20px',
       md: '14px/20px',
@@ -374,7 +353,8 @@ export function useButtonTextScale(variant: ButtonVariant, size: ButtonSize) {
       sm: 'inherit',
       md: 'inherit',
       lg: 'inherit',
+      icon: 'inherit',
     },
   }
-  return scales[variant]?.[size] || '14px/20px'
+  return scales[variant]?.[size] ?? '14px/20px'
 }

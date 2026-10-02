@@ -1,8 +1,8 @@
 export function useHaptics() {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  const vibrate = (pattern: number[]) => {
-    if (prefersReducedMotion || !navigator.vibrate) return
+  const vibrate = (pattern: number | number[]) => {
+    if (prefersReducedMotion || typeof navigator === 'undefined' || !navigator.vibrate) return
     ;(navigator as any).vibrate(pattern)
   }
 
@@ -10,7 +10,7 @@ export function useHaptics() {
     if (prefersReducedMotion) return
     switch (type) {
       case 'tap':
-        vibrate(10)
+        vibrate([10])
         break
       case 'success':
         vibrate([12, 40, 12])
@@ -19,7 +19,7 @@ export function useHaptics() {
         vibrate([40, 30, 40])
         break
       case 'wheel-stop':
-        vibrate(25)
+        vibrate([25])
         break
     }
   }

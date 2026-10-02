@@ -1,8 +1,7 @@
-'use client'
+﻿'use client'
 
 import * as React from 'react'
 import { Avatar } from '@/components/Avatar'
-import { useState, useEffect, useRef } from 'react'
 
 export type TutorialFeature = {
   id: string
@@ -39,151 +38,135 @@ export function TutorialDialog({
   const [currentStep, setCurrentStep] = React.useState(0)
   const [typingIndex, setTypingIndex] = React.useState(0)
   const [showNext, setShowNext] = React.useState(false)
-  const [showSkip, setShowSkip] = React.useState(true)
   const [dontShowAgain, setDontShowAgain] = React.useState(false)
-  const textRef = useRef<string>('')
 
-  // Feature steps data
   const steps = feature?.steps ?? []
+  const currentText = steps[currentStep]?.text ?? ''
 
-  // Typing animation: 28ms per character for tutorial dialogue
-  useEffect(() => {
-    if (typingIndex < steps[currentStep]?.text.length && currentStep < steps.length) {
-      setTypingIndex(prev => prev + 1)
-      const timeout = setTimeout(arguments.callee, 28)
-      return () => clearTimeout(timeout)
-    }
-  }, [typingIndex, currentStep])
+  React.useEffect(() => {
+    if (!isOpen || typingIndex >= currentText.length) return
+    const timeout = window.setTimeout(() => {
+      setTypingIndex((prev) => Math.min(prev + 1, currentText.length))
+    }, 28)
+    return () => window.clearTimeout(timeout)
+  }, [isOpen, typingIndex, currentText.length])
 
-    // Next enabled after typing ends
-  useEffect(() => {
-    if (typingIndex >= steps[currentStep]?.text.length) {
+  React.useEffect(() => {
+    if (!isOpen) return
+    if (typingIndex >= currentText.length) {
       setShowNext(true)
+    } else {
+      setShowNext(false)
     }
-  }, [typingIndex])
+  }, [isOpen, typingIndex, currentText.length])
 
-  // Handle complete (tap or space)
-  const handleComplete = () => {
-    setTypingIndex(steps[currentStep]?.text.length ?? 0)
-    setShowNext(false)
-  }
-
-  // KeyDown handler for Enter/Space/Escape
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault()
-        handleComplete()
+  React.useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault()
+        setTypingIndex(currentText.length)
       }
-      if (e.key === 'Escape') {
+      if (event.key === 'Escape') {
         onSkip()
       }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [])
+  }, [currentText.length, onSkip])
 
-  // Avatar in corner
-  const avatarElement = avatar ? (
-    <Avatar
-      id={avatar.id}
-      speaking={avatar.speaking !== false}
-      size={32}
-      className="absolute top-2 left-2"
-    />
-  ) : null
+  const handleComplete = () => setTypingIndex(currentText.length)
+  const handleNext = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep((prev) => prev + 1)
+      setTypingIndex(0)
+      setShowNext(false)
+      onNext()
+      return
+    }
+    onComplete()
+    onClose()
+  }
+
+  if (!isOpen) return null
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
-      onClick={onClose}
-    >
-      {/* Dim background */}
-      <div className="absolute inset-0 bg-black/72 pointer-events-auto" onClick={onClose} />
+    <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center" onClick={onClose}>
+      <div className="pointer-events-auto absolute inset-0 bg-black/72" onClick={onClose} />
 
-      {/* Dialog box */}
       <div
-        className={`relative bg-[var(--surface)] rounded-lg border border-[var(--accent)] shadow-xl max-w-md w-full transform scale-95 transition-all duration-300 ${reducedMotion ? 'scale-98' : ''}` }
+        className={`relative max-w-md w-full rounded-lg border border-[var(--accent)] bg-[var(--surface)] shadow-xl transition-all duration-300 ${reducedMotion ? 'scale-98' : 'scale-95'}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="tutorial-title"
       >
-        {/* Header */}
-        <div className="px-5 py-3 border-b border-[var(--line)]">
+        <div className="border-b border-[var(--line)] px-5 py-3">
           <h2 id="tutorial-title" className="text-h3 font-medium text-[var(--text)]">
             {feature?.title ?? 'Tutorial'}
           </h2>
           <button
             onClick={onSkip}
-            className="absolute right-2 text-[var(--muted)] hover:text-[var(--text)]"
+            className="absolute right-2 top-2 text-[var(--muted)] hover:text-[var(--text)]"
             aria-label="Skip tutorial"
+            type="button"
           >
             Skip
           </button>
         </div>
 
-        {/* Step counter */}
         <div className="px-5 pt-3">
           <p className="text-caption uppercase tracking-wider text-[var(--muted)]">
-            {currentStep + 1} / {steps.length}
+            {currentStep + 1} / {steps.length || 1}
           </p>
         </div>
 
-        {/* Title */}
-        <h3 id="tutorial-title" className="text-h3 font-medium text-[var(--text)] mt-2 text-center">
+        <h3 className="mt-2 text-center text-h3 font-medium text-[var(--text)]">
           {feature?.title ?? 'Tutorial'}
         </h3>
 
-        {/* Typing-animated body */}
-        <div className="px-5 py-4 flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden px-5 py-4">
           <p className="text-dialog text-[var(--text)]">
-            {showNext || typingIndex < (steps[currentStep]?.text.length ?? 0) ? (
-              // Show typed text or full text
-              typingIndex < (steps[currentStep]?.text.length ?? 0)
-                ? steps[currentStep]?.text?.slice(0, typingIndex) ?? ''
-                : steps[currentStep]?.text ?? ''
-            ) : (
-              <span>{steps[currentStep]?.text ?? ''}{'_'}</span>
-            )}
+            {currentText.slice(0, typingIndex)}{typingIndex < currentText.length ? '_' : ''}
           </p>
         </div>
 
-        {/* Avatar in corner */}
-        {avatarElement}
+        {avatar && (
+          <div className="absolute left-2 top-2">
+            <Avatar id={avatar.id as any} speaking={avatar.speaking !== false} size={32} />
+          </div>
+        )}
 
-        {/* Buttons */}
-        <div className="px-5 py-4 border-t border-[var(--line)] flex justify-end gap-2">
+        <div className="flex justify-end gap-2 border-t border-[var(--line)] px-5 py-4">
           <button
             onClick={onSkip}
-            disabled={!showNext}
-            className="flex-1 rounded-md px-3 py-2 text-sm text-[var(--muted)] bg-transparent hover:bg-[var(--surface-2)] transition-colors skip ghost"
+            className="flex-1 rounded-md bg-transparent px-3 py-2 text-sm text-[var(--muted)] transition-colors hover:bg-[var(--surface-2)]"
             aria-label="Skip tutorial"
+            type="button"
           >
             Skip
           </button>
+
           {showNext && (
             <button
-              onClick={onNext}
-              disabled={typingIndex < (steps[currentStep]?.text.length ?? 0)}
-              className="flex-1 rounded-md px-3 py-2 text-sm font-medium bg-[var(--ok)] text-[var(--bg)] transition-colors"
+              onClick={handleNext}
+              className="flex-1 rounded-md bg-[var(--ok)] px-3 py-2 text-sm font-medium text-[var(--bg)] transition-colors"
               aria-label="Next step"
+              type="button"
             >
               Next
             </button>
           )}
         </div>
 
-        {/* Don't show again checkbox */}
         {feature && (
-          <div className="px-5 pt-2 text-xs text-[var(--muted)]">
+          <div className="px-5 pb-4 text-xs text-[var(--muted)]">
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={dontShowAgain}
-                onChange={e => setDontShowAgain(e.target.checked)}
+                onChange={(event) => setDontShowAgain(event.target.checked)}
                 className="rounded border"
               />
-              Don't show tutorials again
+              Don&apos;t show tutorials again
             </label>
           </div>
         )}
@@ -192,36 +175,28 @@ export function TutorialDialog({
   )
 }
 
-// Storybook stories
-if (typeof window !== 'undefined' && window.__STORYBOOK__) {
-  export function TutorialDialogStory() {
-    const [feature, setFeature] = React.useState({
-      id: 'lobby_setup',
-      title: 'Lobby Setup',
-      steps: [
-        {
-          element: '[data-t=players]',
-          text: 'Choose how many seats. 1 to 6 players.',
-        },
-        {
-          element: '[data-t=duration]',
-          text: '5, 10 or 15 minutes. The clock is real: a wave of layoffs starts at 70%.',
-        },
-      ],
-    })
+export function TutorialDialogStory() {
+  const [feature] = React.useState({
+    id: 'lobby_setup',
+    title: 'Lobby Setup',
+    trigger: 'lobby',
+    steps: [
+      { element: '[data-t=players]', text: 'Choose how many seats. 1 to 6 players.' },
+      {
+        element: '[data-t=duration]',
+        text: '5, 10 or 15 minutes. The clock is real: a wave of layoffs starts at 70%.',
+      },
+    ],
+  })
 
-    return (
-      <div>
-        <TutorialDialog
-          feature={feature}
-          isOpen={true}
-          onClose={() => console.log('Closed')}
-          onNext={() => console.log('Next')}
-          onSkip={() => console.log('Skipped')}
-          onComplete={() => console.log('Complete')}
-          avatar={{ id: 'dev', speaking: true }}
-        />
-      </div>
-    )
-  }
+  return (
+    <TutorialDialog
+      feature={feature}
+      isOpen={true}
+      onClose={() => undefined}
+      onNext={() => undefined}
+      onSkip={() => undefined}
+      onComplete={() => undefined}
+    />
+  )
 }

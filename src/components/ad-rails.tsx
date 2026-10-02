@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { Button } from '@/components/Button'
 import { AdCreative, AD_POOL } from '@/lib/ads'
 
 const ROTATE_MS = 15000

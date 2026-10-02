@@ -1,8 +1,7 @@
-'use client'
+﻿'use client'
 
 import * as React from 'react'
 import { FocusModal } from '@/components/FocusModal'
-import { useState, useEffect, useRef } from 'react'
 
 export interface IncidentAlertProps {
   isOpen: boolean
@@ -13,49 +12,33 @@ export interface IncidentAlertProps {
   affectedPlayer?: string
 }
 
-export function IncidentAlert({ isOpen, onOpenChange, catalyst, target, fallout, affectedPlayer }: IncidentAlertProps) {
-  const [incidentText, setIncidentText] = useState<string>('')
-  const [typingIndex, setTypingIndex] = useState(0)
-  const [showProgress, setShowProgress] = useState(false)
-  const textRef = useRef<string>('')
-
-  // Assemble incident text: "Incident Alert! [catalyst] [target], [fallout]"
+export function IncidentAlert({
+  isOpen,
+  onOpenChange,
+  catalyst,
+  target,
+  fallout,
+  affectedPlayer,
+}: IncidentAlertProps) {
+  const [typingIndex, setTypingIndex] = React.useState(0)
   const fullText = `Incident Alert! ${catalyst} ${target}, ${fallout}`
-  textRef.current = fullText
 
-  // Typing animation: 22ms per character
   React.useEffect(() => {
-    if (typingIndex < fullText.length) {
-      setTypingIndex(prev => prev + 1)
-      const timeout = setTimeout(arguments.callee, 22)
-      return () => clearTimeout(timeout)
-    }
-  }, [typingIndex])
+    if (typingIndex >= fullText.length) return
+    const timeout = window.setTimeout(() => {
+      setTypingIndex((prev) => Math.min(prev + 1, fullText.length))
+    }, 22)
+    return () => window.clearTimeout(timeout)
+  }, [typingIndex, fullText.length])
 
-  // Complete typing when reaching end
-  React.useEffect(() => {
-    if (typingIndex >= fullText.length) {
-      setShowProgress(true)
-    }
-  }, [typingIndex])
-
-  // Tap to complete
-  const handleComplete = () => {
-    setTypingIndex(fullText.length)
-  }
-
-  // Avatar reaction
-  useEffect(() => {
-    // In a real app, this would update the avatar state
-    console.log('Avatar reaction:', affectedPlayer ? 'shock' : 'happy')
-  }, [affectedPlayer])
+  const handleComplete = () => setTypingIndex(fullText.length)
 
   return (
     <FocusModal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title="Incident Alert"
-      incidentText={showProgress ? fullText : ''}
+      incidentText={typingIndex >= fullText.length ? fullText : ''}
       onAcknowledge={() => {
         setTypingIndex(fullText.length)
         onOpenChange(false)
@@ -63,23 +46,15 @@ export function IncidentAlert({ isOpen, onOpenChange, catalyst, target, fallout,
       onBuy={() => onOpenChange(false)}
       onPass={() => onOpenChange(false)}
     >
-      {/* Typing-animated body */}
       <div className="space-y-4">
-        {/* Incident text - appears via typing animation */}
         <p className="text-dialog text-[var(--text)]">
-          {showProgress ? (
-            <span ref={textRef} />
-          ) : (
-            <span>{fullText.slice(0, typingIndex)}{'_'}</span>
-          )}
+          {fullText.slice(0, typingIndex)}{typingIndex < fullText.length ? '_' : ''}
         </p>
 
-        {/* Tap to complete instruction */}
-        <p className="text-caption text-[var(--muted)] cursor-pointer" onClick={handleComplete}>
+        <p className="cursor-pointer text-caption text-[var(--muted)]" onClick={handleComplete}>
           Tap to complete
         </p>
 
-        {/* Avatar reaction */}
         {affectedPlayer && (
           <p className="text-caption text-[var(--muted)]">
             {affectedPlayer} looks {'shocked'}

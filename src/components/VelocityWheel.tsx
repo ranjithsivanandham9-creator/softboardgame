@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 import { useReducedMotion } from '@/lib/motion'
 import { useHaptics } from '@/lib/haptics'
 
@@ -33,10 +34,11 @@ const segmentLabels: Record<WheelResult, string> = {
 // Compute target angle: each result occupies its weighted portion of the circle
 // Start from top (12 o'clock) and go clockwise
 const computeTargetAngle = (result: WheelResult): number => {
-  const resultIndex = Object.keys(segmentWeights).indexOf(result)
+  const orderedResults = Object.keys(segmentWeights) as WheelResult[]
+  const resultIndex = orderedResults.indexOf(result)
   let angle = 0
   for (let i = 0; i < resultIndex; i++) {
-    const res = Object.keys(segmentWeights)[i]
+    const res = orderedResults[i]
     angle += segmentWeights[res]
   }
   // Each "unit" is 360 / total_weight degrees, starting from top
@@ -106,9 +108,6 @@ export function VelocityWheel({ result, isLocalTurn, onSpin, disabled = false }:
   }
 
   const glowColor = glowColors[finalResult ?? '1']
-
-  // Wind up animation (rotate back 12deg)
-  const windUp = motion.startsWith('rotate(-12deg)')
 
   // Spin animation - target angle from result + 3-5 full rotations
   const totalRotations = reducedMotion ? 0 : 4 // 4 full rotations for visual spin
@@ -299,39 +298,37 @@ export function VelocityWheel({ result, isLocalTurn, onSpin, disabled = false }:
 }
 
 // Storybook stories
-if (typeof window !== 'undefined' && window.__STORYBOOK__) {
-  export const VelocityWheelStory = () => {
-    const [result, setResult] = React.useState<WheelResult | null>(null)
-    const [isLocalTurn, setIsLocalTurn] = React.useState(true)
+export const VelocityWheelStory = () => {
+  const [result, setResult] = React.useState<WheelResult | null>(null)
+  const [isLocalTurn, setIsLocalTurn] = React.useState(true)
 
-    return (
-      <div className="p-8">
-        <VelocityWheel
-          result={result}
-          isLocalTurn={isLocalTurn}
-          onSpin={() => setResult('3')}
-          disabled={!isLocalTurn}
-        />
-        <p className="mt-4 text-caption">
-          Result: {result || 'Not spun yet'}
-        </p>
-        <button
-          className="mt-2 px-4 py-2 bg-[var(--ok)] text-[var(--bg)] rounded-md"
-          onClick={() => setResult('5')}
-          disabled={!isLocalTurn}
-        >
-          Spin (5 pts)
-        </button>
-      </div>
-    )
-  }
-
-  export const DisabledWheel = () => (
-    <VelocityWheel
-      result={null}
-      isLocalTurn={false}
-      onSpin={() => {}}
-      disabled
-    />
+  return (
+    <div className="p-8">
+      <VelocityWheel
+        result={result}
+        isLocalTurn={isLocalTurn}
+        onSpin={() => setResult('3')}
+        disabled={!isLocalTurn}
+      />
+      <p className="mt-4 text-caption">
+        Result: {result || 'Not spun yet'}
+      </p>
+      <button
+        className="mt-2 px-4 py-2 bg-[var(--ok)] text-[var(--bg)] rounded-md"
+        onClick={() => setResult('5')}
+        disabled={!isLocalTurn}
+      >
+        Spin (5 pts)
+      </button>
+    </div>
   )
 }
+
+export const DisabledWheel = () => (
+  <VelocityWheel
+    result={null}
+    isLocalTurn={false}
+    onSpin={() => {}}
+    disabled
+  />
+)

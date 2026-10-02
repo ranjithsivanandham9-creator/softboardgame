@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { useRef } from 'react'
+import { Button } from '@/components/Button'
 
 export interface AdvertiseModalProps {
   isOpen: boolean
@@ -53,14 +54,13 @@ export function AdvertiseModal({ isOpen, onOpenChange, onSubmit }: AdvertiseModa
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md"
-      onClick={onOpenChange}
+      onClick={() => onOpenChange(false)}
     >
-      <dialog
-        ref={formRef}
+      <div
         className="relative rounded-lg bg-white p-6 shadow-xl max-w-md w-full transform scale-95 transition-all duration-300"
         onClick={(e) => e.stopPropagation()}
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           {/* Startup name */}
           <div>
             <label className="block text-sm font-medium text-[var(--text)] mb-1">
@@ -143,7 +143,7 @@ export function AdvertiseModal({ isOpen, onOpenChange, onSubmit }: AdvertiseModa
             {status === 'verifying' ? 'Verifying...' : 'Submit'}
           </Button>
         </form>
-      </dialog>
+      </div>
     </div>
   )
 }

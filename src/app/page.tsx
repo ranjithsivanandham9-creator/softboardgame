@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Display, Label, Body, ButtonText } from '@/components/Typography'
-import { Button, SegmentedControl } from '@/components/Button'
+import { Display, Label, Body } from '@/components/Typography'
+import { Button } from '@/components/Button'
 
 export default function HomePage() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
@@ -160,7 +160,7 @@ function Avatar({ id, size }: { id: 'dev' | 'intern' | 'vp' | 'leet' | 'pm' | 'p
           <stop offset="100%" stopColor={colors[id]} stopOpacity="0.1" />
         </radialGradient>
       </defs>
-      <circle cx="200" cy="214" r="200" fill="url(#" + {`${id}-bg`}) + ")" />
+      <circle cx="200" cy="214" r="200" fill={`url(#${id}-bg)`} />
       <circle cx="200" cy="214" r="197" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3" />
       <text x="200" y="220" textAnchor="middle" fill="var(--text)" fontSize="48" fontWeight="800" fontFamily="Inter, sans-serif">
         {id.charAt(0).toUpperCase()}

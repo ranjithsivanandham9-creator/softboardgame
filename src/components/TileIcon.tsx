@@ -53,7 +53,7 @@ export function TileIcon({ name, theme = 'dark', size = 48, className }: TileIco
   
   // Extract the SVG content from the require statement
   // In production, this would be handled differently
-  const svgComponents: Record<TileIconName, React.ComponentType> = {
+  const svgComponents: Record<TileIconName, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     start: require('/public/tiles/start.svg').default,
     repository: require('/public/tiles/repository-dark.svg').default,
     promotion: require('/public/tiles/promotion-dark.svg').default,
@@ -65,7 +65,7 @@ export function TileIcon({ name, theme = 'dark', size = 48, className }: TileIco
     'laid-off': require('/public/tiles/laid-off-dark.svg').default,
   }
 
-  const IconComponent = svgComponents[name]
+  const IconComponent = svgComponents[name] as React.ComponentType<React.SVGProps<SVGSVGElement>>
   
   return (
     <svg
@@ -81,41 +81,39 @@ export function TileIcon({ name, theme = 'dark', size = 48, className }: TileIco
 }
 
 // Storybook stories
-if (typeof window !== 'undefined' && window.__STORYBOOK__) {
-  export const Dark = () => (
-    <div className="grid grid-cols-4 gap-2">
-      {['start', 'repository', 'promotion', 'pip-trap', 'incident', 'draw-card', 'open-floor', 'corner-office', 'laid-off'].map(name => (
-        <TileIcon key={name} name={name as any} theme="dark" size={32} />
-      ))}
-    </div>
-  )
+export const Dark = () => (
+  <div className="grid grid-cols-4 gap-2">
+    {['start', 'repository', 'promotion', 'pip-trap', 'incident', 'draw-card', 'open-floor', 'corner-office', 'laid-off'].map(name => (
+      <TileIcon key={name} name={name as any} theme="dark" size={32} />
+    ))}
+  </div>
+)
 
-  export const Light = () => (
-    <div className="grid grid-cols-4 gap-2">
-      {['start', 'repository', 'promotion', 'pip-trap', 'incident', 'draw-card', 'open-floor', 'corner-office', 'laid-off'].map(name => (
-        <TileIcon key={name} name={name as any} theme="light" size={32} />
-      ))}
-    </div>
-  )
+export const Light = () => (
+  <div className="grid grid-cols-4 gap-2">
+    {['start', 'repository', 'promotion', 'pip-trap', 'incident', 'draw-card', 'open-floor', 'corner-office', 'laid-off'].map(name => (
+      <TileIcon key={name} name={name as any} theme="light" size={32} />
+    ))}
+  </div>
+)
 
-  export const DarkLightComparison = () => (
-    <div className="grid grid-cols-2 gap-4">
-      <div>
-        <h4 className="text-caption text-[var(--muted)] dark:text-[var(--text)]">Dark</h4>
-        <div className="grid grid-cols-4 gap-1">
-          {['start', 'repository', 'promotion'].map(n => (
-            <TileIcon key={n} name={n as any} theme="dark" size={24} />
-          ))}
-        </div>
-      </div>
-      <div>
-        <h4 className="text-caption text-[var(--muted)] dark:text-[var(--text)]">Light</h4>
-        <div className="grid grid-cols-4 gap-1">
-          {['start', 'repository', 'promotion'].map(n => (
-            <TileIcon key={n} name={n as any} theme="light" size={24} />
-          ))}
-        </div>
+export const DarkLightComparison = () => (
+  <div className="grid grid-cols-2 gap-4">
+    <div>
+      <h4 className="text-caption text-[var(--muted)] dark:text-[var(--text)]">Dark</h4>
+      <div className="grid grid-cols-4 gap-1">
+        {['start', 'repository', 'promotion'].map(n => (
+          <TileIcon key={n} name={n as any} theme="dark" size={24} />
+        ))}
       </div>
     </div>
-  )
-}
+    <div>
+      <h4 className="text-caption text-[var(--muted)] dark:text-[var(--text)]">Light</h4>
+      <div className="grid grid-cols-4 gap-1">
+        {['start', 'repository', 'promotion'].map(n => (
+          <TileIcon key={n} name={n as any} theme="light" size={24} />
+        ))}
+      </div>
+    </div>
+  </div>
+)
